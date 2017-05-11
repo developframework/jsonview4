@@ -158,7 +158,7 @@ public void printJson(JsonGenerator generator, DataModel dataModel, String names
 Template template = jsonviewConfiguration.extractTemplate("namespace", "id");
 ```
 
-#### **3.1.7. **JsonviewTemplatePackage
+#### **3.1.7. JsonviewTemplatePackage**
 
 `com.github.developframework.jsonview.core.element.JsonviewTemplatePackage`类，一个JsonviewTemplatePackage实例是一个命名空间，可以装载若干个Template实例。推荐将Template按功能有序存放于JsonviewTemplatePackage。通过以下方法得到JsonviewTemplatePackage对象：
 
@@ -676,7 +676,7 @@ String json = jsonProducer.createJson(dataModel, "jsonview-student", "student-li
 
 ### **5.1.处理器**
 
-#### <a name="chapter511">**5.1.1. `<property>` 的转换器 `converter` **</a>
+#### <a name="chapter511">**5.1.1. `<property>` 的转换器 `converter`**</a>
 
 `com.github.developframework.jsonview.core.dynamic.PropertyConverter`
 接口可以对表达式选取的属性值进行自定义转换。
