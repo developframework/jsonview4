@@ -23,16 +23,12 @@ maven
 ### **1.3. 依赖项**
 
 - commons-lang3.jar
-
 - slf4j-api.jar
-
 - jackson-core.jar
-
 - jackson-databind.jar
-
 - jackson-annotations.jar
-
 - lombok.jar
+- expression.jar
 
 ## <a name="chapter2">**2. HelloWorld**</a>
 
