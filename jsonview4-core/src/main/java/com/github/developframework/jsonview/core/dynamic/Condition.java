@@ -1,0 +1,21 @@
+package com.github.developframework.jsonview.core.dynamic;
+
+import com.github.developframework.expression.Expression;
+import com.github.developframework.jsonview.core.data.DataModel;
+
+/**
+ * 条件
+ * @author qiuzhenhao
+ * @date 2017/5/9
+ */
+@FunctionalInterface
+public interface Condition {
+
+    /**
+     * 判断条件
+     * @param dataModel 数据模型
+     * @param expression 当前位置的表达式
+     * @return 判断结果
+     */
+    boolean verify(DataModel dataModel, Expression expression);
+}
