@@ -1,6 +1,6 @@
 # Jsonview4
 
-## 1. 概述
+## <a name="chapter1">**1. 简介**</a>
 
 Jsonview框架构建于jackson框架之上，实现通过XML文件配置来自定义json格式，大大提升了java生成json字符串的自由性，让开发模块化更加便捷快速。
 
@@ -34,7 +34,7 @@ maven
 
 - lombok.jar
 
-## 2. HelloWorld
+## <a name="chapter2">**2. HelloWorld**</a>
 
 一个最简单的jsonview使用示例：
 
@@ -77,7 +77,7 @@ public class Application {
 {"sayHello":"Hello Jsonview4!"}
 ```
 
-## **3. 概览**
+## <a name="chapter3">**3. 概览**</a>
 
 ### **3.1. java概览**
 
@@ -184,7 +184,7 @@ Jsonview框架的所有异常类。
 
 #### **3.2.1. 结构**
 
-Jsonview configuration 文档的结构如下：
+Jsonview configuration 文档的结构如下： 
 
 ```xml
 <jsonview-configuration>
@@ -253,7 +253,7 @@ Jsonview configuration文档不是唯一的，Jsonview框架允许你拥有多�
 
 ###### b) object
 
-当你需要在json中构建一个对象结构时，你将会使用到`<object>`标签。
+当你需要在json中构建一个对象结构时，你将会使用到`<object>`标签。详见[4.1.节](#chapter41)
 
 ```xml
 <object data="" alias="" for-class="" null-hidden="true"></object>
@@ -268,18 +268,19 @@ Jsonview configuration文档不是唯一的，Jsonview框架允许你拥有多�
 
 ###### c) array
 
-当你需要在json中构建一个数组结构时，你将会使用到`<array>`标签。
+当你需要在json中构建一个数组结构时，你将会使用到`<array>`标签。详见[4.6.节](#chapter46)
 
 ```xml
 <array data="" alias="" for-class="" null-hidden="true"></array>
 ```
 
-| 属性          | 功能                                | 是否必须 |
-| ----------- | --------------------------------- | ---- |
-| data        | 取值表达式                             | 是    |
-| alias       | 别名，你可以重新定义显示名                     | 否    |
-| for-class   | 声明data表达式指向的对象类型                  | 否    |
-| null-hidden | true时表示表达式取的值为null时隐藏该节点，默认为false | 否    |
+| 属性           | 功能                                       | 是否必须 |
+| ------------ | ---------------------------------------- | ---- |
+| data         | 取值表达式                                    | 是    |
+| alias        | 别名，你可以重新定义显示名                            | 否    |
+| for-class    | 声明data表达式指向的对象类型                         | 否    |
+| null-hidden  | true时表示表达式取的值为null时隐藏该节点，默认为false        | 否    |
+| map-function | java.util.function.Function的实现类全名或Expression表达式。详见[5.1.2节](#chapter512) | 否    |
 
 `<array>`标签可以没有子标签，这时表示数组为基本类型数组。
 
@@ -291,18 +292,18 @@ Jsonview configuration文档不是唯一的，Jsonview框架允许你拥有多�
 <property data="" alias="" converter="" null-hidden="true"/>
 ```
 
-| 属性          | 功能                                | 是否必须 |
-| ----------- | --------------------------------- | ---- |
-| data        | 取值表达式                             | 是    |
-| alias       | 别名，你可以重新定义显示名                     | 否    |
-| converter   | 类型转换器全限定类名或expression表达式          | 否    |
-| null-hidden | true时表示表达式取的值为null时隐藏该节点，默认为false | 否    |
+| 属性          | 功能                                       | 是否必须 |
+| ----------- | ---------------------------------------- | ---- |
+| data        | 取值表达式                                    | 是    |
+| alias       | 别名，你可以重新定义显示名                            | 否    |
+| converter   | 类型转换器全限定类名或expression表达式。详见[5.1.1节](#chapter511) | 否    |
+| null-hidden | true时表示表达式取的值为null时隐藏该节点，默认为false        | 否    |
 
 ##### **3.2.2.2. 功能型标签**
 
 ###### a) include
 
-Jsonview框架提供模块化设计json结构视图的功能。在一个`<template>`标签中你可以采用`<include>`标签来导入其它的`<template>`的结构内容，从而实现模块化单元分解。详见[5.3.节](#chapter53)
+Jsonview框架提供模块化设计json结构视图的功能。在一个`<template>`标签中你可以采用`<include>`标签来导入其它的`<template>`的结构内容，从而实现模块化单元分解。详见[5.3.1.节](#chapter531)
 
 ```xml
 <include id="" namespace=""/>
@@ -379,6 +380,24 @@ Jsonview框架提供模块化设计json结构视图的功能。在一个`<templa
 | --------- | ---- | ---- |
 | port-name | 端口名称 | 是    |
 
+###### g) if  else
+
+分支结构标签。详见[5.5.1节](#chapter551)
+
+```xml
+<if condition="">
+
+</if>
+<else>
+
+</else>
+```
+
+| 属性        | 功能                      | 是否必须 |
+| --------- | ----------------------- | ---- |
+| condition | 条件接口实现类全名或Expression表达式 | 是    |
+
+
 ##### **3.2.2.3. 拓展型标签**
 
 ###### a) property-date
@@ -409,7 +428,7 @@ Jsonview框架提供模块化设计json结构视图的功能。在一个`<templa
 
 该标签拓展于`<property>`，可以将数字类型（short、int、long）变为boolean型，非0值为true，0值为false。详见[4.3.3节](#chapter433)
 
-## **4. 基本使用**
+## <a name="chapter4">**4. 基本使用**</a>
 
 模型声明（以下各小节示例代码均使用这些模型实体类）：
 
@@ -449,7 +468,7 @@ public class Account {
 }
 ```
 
-### **4.1. 简单输出模型对象Json**
+### <a name="chapter41">**4.1. 简单输出模型对象Json**</a>
 
 ```xml
 <!-- /jsonview/jsonview-student.xml --> 
@@ -594,7 +613,7 @@ Student student = new Student("Peter", 1, null);
 {"name":"Peter","classId":1}
 ```
 
-### 4.6. 简单输出数组模型Json
+### <a name="chapter46">**4.6. 简单输出数组模型Json**</a>
 
 利用`array` 标签构造一个数组结构：
 
@@ -653,11 +672,13 @@ String json = jsonProducer.createJson(dataModel, "jsonview-student", "student-li
 } ]
 ```
 
-## **5. 高级功能**
+## <a name="chapter5">**5. 高级功能**</a>
 
-### **5.1. Property的转换器**
+### **5.1.处理器**
 
-`com.github.developframework.jsonview.core.converter.PropertyConverter`
+#### <a name="chapter511">**5.1.1. `<property>` 的转换器 `converter` **</a>
+
+`com.github.developframework.jsonview.core.dynamic.PropertyConverter`
 接口可以对表达式选取的属性值进行自定义转换。
 
 ```java
@@ -701,6 +722,34 @@ dataModel.putData("nameConverter", (PropertyConverter<String>) source -> "My nam
 
 `<property>` 系列标签的`converter` 属性可以填写Expression表达式，还可以填写`PropertyConverter` 的接口实现类全类名。
 
+#### <a name="chapter512">**5.1.2. `<array>` 的元素映射器 `map-function`**</a>
+
+在`<array>`节点属性`map-function`用于指定对每个元素的映射函数。`map-function`的值可以为`Expression`表达式或一个实现`com.github.developframework.jsonview.core.dynamic.MapFunction`接口的完全类名。其中使用表达式方式，其获取的实例必须是`com.github.developframework.jsonview.core.dynamic.MapFunction`的实现类。具体示例：实现功能：对数组的每个元素进行映射处理，处理结果作为生成Json的数据。以下示例在字符串数组的每项元素以`value_{item}_{i}` 形式输出。
+
+```java
+String[] strArray = new String[]{"aaa", "bbb", "ccc"};
+dataModel.putData("strArray", strArray);
+dataModel.putData("func", ((MapFunction<String, String>) (item, i) -> "value_" + item + "_" + i));
+```
+
+```xml
+<template id="array-map-function-demo" >
+  <array data="strArray" map-function="func"></array>
+</template>
+```
+
+```json
+{"str_array":["value_aaa_0","value_bbb_1","value_ccc_2"]}
+```
+**注意**
+
+使用`map-function`会导致`<array>`标签的所有子节点失效，因为映射结果将会直接作为json数据。
+
+如果你设置了子节点将会出现以下警告：
+
+```
+The child element invalid, because you use "map-function" attribute.
+```
 ### <a name="chapter52">**5.2. 虚拟结构**</a>
 
 使用`<object-virtual>`可以虚拟一个对象结构。
@@ -875,7 +924,7 @@ dataModel.putData("scores", scores);
 
 ### 5.5. 分支结构
 
-#### 5.5.1. `<if>` `<else>`
+#### <a name="chapter551">**5.5.1. `<if>` `<else>`**</a>
 
 可以使用`<if>` `<else>` 标签进行模块内容的取舍。`<else>` 标签可以不写，但必须紧跟`<if>` 后出现。
 
@@ -924,11 +973,10 @@ dataModel.putData("myCondition", (Condition) (dm, expression) -> true);
 {"sayBye" : "Bye"}
 ```
 
-## **6. 日志**
+## <a name="chapter6">**6. 日志**</a>
 
 Jsonview框架使用slf4j-api日志接口，提供内部日志打印功能。可以使用log4j或者logback打印日志。
 以下示例使用logback
-logback.xml
 
 ```xml
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
@@ -946,3 +994,8 @@ logback.xml
 ```
 
 项目启动日志：
+
+```
+09:29:07.753 INFO  - Jsonview framework loaded the configuration file "/jsonview/jsonview-demo.xml".
+```
+
