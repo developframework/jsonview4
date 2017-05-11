@@ -25,6 +25,9 @@ public class JsonviewTemplate extends ObjectElement{
     @Setter
     private Extend extend;
 
+    @Setter
+    private String mapFunctionValue;
+
     public JsonviewTemplate(JsonviewConfiguration configuration, String namespace, String templateId) {
         super(configuration, namespace, templateId, null, null);
     }

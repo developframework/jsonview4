@@ -7,6 +7,7 @@ import com.github.developframework.expression.ArrayExpression;
 import com.github.developframework.expression.Expression;
 import com.github.developframework.expression.ObjectExpression;
 import com.github.developframework.jsonview.core.data.DataModel;
+import com.github.developframework.jsonview.core.dynamic.MapFunction;
 import com.github.developframework.jsonview.core.element.ArrayElement;
 import com.github.developframework.jsonview.core.element.Element;
 import com.github.developframework.jsonview.core.exception.JsonviewException;
@@ -19,18 +20,19 @@ import java.util.Optional;
 import java.util.function.Function;
 
 /**
+ * 数组节点处理器
  * @author qiuzhenhao
  * @date 2017/5/8
  */
 @Slf4j
 public class ArrayProcessor extends ContainerProcessor<ArrayElement, ArrayNode> {
 
-    private Optional<Function> mapFunction;
+    private Optional<MapFunction> mapFunctionOptional;
 
     public ArrayProcessor(ProcessContext processContext, ArrayElement element, Expression parentExpression) {
         super(processContext, element, parentExpression);
-        this.mapFunction = mapFunction(element.getMapFunctionValueOptional(), processContext.getDataModel());
-        if (mapFunction != null) {
+        this.mapFunctionOptional = mapFunction(element.getMapFunctionValueOptional(), processContext.getDataModel());
+        if (mapFunctionOptional.isPresent()) {
             if (!element.isChildElementEmpty()) {
                 log.warn("The child element invalid, because you use \"map-function\" attribute.");
             }
@@ -63,7 +65,7 @@ public class ArrayProcessor extends ContainerProcessor<ArrayElement, ArrayNode> 
     }
 
     private void single(ArrayExpression arrayExpression, int size) {
-        if (element.isChildElementEmpty() || mapFunction.isPresent()) {
+        if (element.isChildElementEmpty() || mapFunctionOptional.isPresent()) {
             empty(arrayExpression.getIndex());
         } else {
             final ObjectInArrayProcessor childProcessor = new ObjectInArrayProcessor(processContext, element.getItemObjectElement(), arrayExpression, size);
@@ -82,8 +84,8 @@ public class ArrayProcessor extends ContainerProcessor<ArrayElement, ArrayNode> 
         }
         Object object = objectOptional.get();
 
-        if (mapFunction.isPresent()) {
-            object = mapFunction.get().apply(object);
+        if (mapFunctionOptional.isPresent()) {
+            object = mapFunctionOptional.get().apply(object, index);
         }
 
         if (object instanceof String) {
@@ -111,7 +113,7 @@ public class ArrayProcessor extends ContainerProcessor<ArrayElement, ArrayNode> 
         }
     }
 
-    private Optional<Function> mapFunction(Optional<String> mapFunctionValueOptional, DataModel dataModel) {
+    protected Optional<MapFunction> mapFunction(Optional<String> mapFunctionValueOptional, DataModel dataModel) {
         if (mapFunctionValueOptional.isPresent()) {
             final String mapFunctionValue = mapFunctionValueOptional.get();
             Optional<Object> mapFunctionOptional = dataModel.getData(mapFunctionValue);
@@ -124,10 +126,10 @@ public class ArrayProcessor extends ContainerProcessor<ArrayElement, ArrayNode> 
                     throw new JsonviewException("Can't new mapFunction instance.");
                 }
             });
-            if (obj instanceof Function) {
-                return Optional.of(((Function) obj));
+            if (obj instanceof MapFunction) {
+                return Optional.of(((MapFunction) obj));
             } else {
-                throw new JsonviewException(String.format("\"%s\" is not a Function instance.", obj.toString()));
+                throw new JsonviewException(String.format("\"%s\" is not a MapFunction instance.", obj.toString()));
             }
         }
         return Optional.empty();

@@ -27,6 +27,7 @@ class TemplateElementSaxParser extends ContainerElementSaxParser<JsonviewTemplat
         final String id = attributes.getValue("id").trim();
         final String data = attributes.getValue("data");
         final String extend = attributes.getValue("extend");
+        final String mapFunctionValue = attributes.getValue("map-function");
         final JsonviewTemplate jsonviewTemplate = new JsonviewTemplate(jsonviewConfiguration, parseContext.getCurrentTemplatePackage().getNamespace(), id);
         if (StringUtils.isNotBlank(data)) {
             jsonviewTemplate.setDataDefinition(new DataDefinition(data));
@@ -36,6 +37,9 @@ class TemplateElementSaxParser extends ContainerElementSaxParser<JsonviewTemplat
         if (StringUtils.isNotBlank(extend)) {
             String defaultNamespace = parseContext.getCurrentTemplatePackage().getNamespace();
             jsonviewTemplate.setExtend(jsonviewTemplate.new Extend(extend.trim(), defaultNamespace));
+        }
+        if (StringUtils.isNotBlank(mapFunctionValue)) {
+            jsonviewTemplate.setMapFunctionValue(mapFunctionValue);
         }
         handleForClass(jsonviewTemplate, attributes);
         parseContext.setCurrentTemplate(jsonviewTemplate);

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.developframework.jsonview.core.data.DataDefinition;
 import com.github.developframework.jsonview.core.data.DataModel;
+import com.github.developframework.jsonview.core.element.ArrayElement;
 import com.github.developframework.jsonview.core.element.JsonviewTemplate;
 import com.github.developframework.jsonview.core.exception.JsonviewException;
 import com.github.developframework.jsonview.core.processor.ArrayProcessor;
@@ -105,7 +106,9 @@ class DefaultJsonProducer implements JsonProducer{
 
     private ArrayNode constructRootArrayNodeTree(ProcessContext processContext, JsonviewTemplate jsonviewTemplate) {
         ArrayNode root = jsonviewConfiguration.getObjectMapper().createArrayNode();
-        ArrayProcessor arrayProcessor = new ArrayTemplateProcessor(processContext, jsonviewTemplate);
+        ArrayElement arrayElement = new ArrayElement(jsonviewConfiguration, jsonviewTemplate.getNamespace(), jsonviewTemplate.getTemplateId(), jsonviewTemplate.getDataDefinition(), null);
+        arrayElement.setMapFunctionValue(jsonviewTemplate.getMapFunctionValue());
+        ArrayProcessor arrayProcessor = new ArrayTemplateProcessor(processContext, jsonviewTemplate, arrayElement);
         arrayProcessor.setNode(root);
         arrayProcessor.process(null);
         return root;

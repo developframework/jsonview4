@@ -12,8 +12,8 @@ import com.github.developframework.jsonview.core.element.JsonviewTemplate;
 public class ArrayTemplateProcessor extends ArrayProcessor{
 
 
-    public ArrayTemplateProcessor(ProcessContext processContext, JsonviewTemplate jsonviewTemplate) {
-        super(processContext, new ArrayElement(processContext.getJsonviewConfiguration(), jsonviewTemplate.getNamespace(), jsonviewTemplate.getTemplateId(), jsonviewTemplate.getDataDefinition(), null), jsonviewTemplate.getDataDefinition().getExpression());
+    public ArrayTemplateProcessor(ProcessContext processContext, JsonviewTemplate jsonviewTemplate, ArrayElement arrayElement) {
+        super(processContext, arrayElement, jsonviewTemplate.getDataDefinition().getExpression());
         element.copyChildElement(jsonviewTemplate);
         element.getItemObjectElement().copyChildElement(jsonviewTemplate);
     }

@@ -244,12 +244,13 @@ Jsonview configuration文档不是唯一的，Jsonview框架允许你拥有多�
   <template id="" data="" for-class=""></jsonview>
   ```
 
-| 属性        | 功能                                       | 是否必须 |
-| --------- | ---------------------------------------- | ---- |
-| id        | 声明模板编号，在命名空间中唯一                          | 是    |
-| data      | 取值表达式                                    | 否    |
-| for-class | 声明data表达式指向的对象类型                         | 否    |
-| extend    | 声明继承的jsonview和端口，格式为namespace.id:port（namespace不填时默认为当前namespace） | 否    |
+| 属性           | 功能                                       | 是否必须 |
+| ------------ | ---------------------------------------- | ---- |
+| id           | 声明模板编号，在命名空间中唯一                          | 是    |
+| data         | 取值表达式                                    | 否    |
+| for-class    | 声明data表达式指向的对象类型                         | 否    |
+| extend       | 声明继承的jsonview和端口，格式为namespace.id:port（namespace不填时默认为当前namespace） | 否    |
+| map-function | 仅当data指代的数据为数组或List时有效。java.util.function.Function的实现类全名或Expression表达式。详见[5.1.2节](#chapter512) | 否    |
 
 ###### b) object
 
