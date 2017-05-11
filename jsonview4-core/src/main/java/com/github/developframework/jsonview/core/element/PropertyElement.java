@@ -8,10 +8,11 @@ import java.util.Optional;
 
 /**
  * 属性节点
+ *
  * @author qiuzhenhao
  * @date 2017/5/7
  */
-public abstract class PropertyElement extends ContentElement{
+public abstract class PropertyElement extends ContentElement {
 
     @Setter
     protected String converterValue;
@@ -22,5 +23,23 @@ public abstract class PropertyElement extends ContentElement{
 
     public Optional<String> getConverterValue() {
         return Optional.ofNullable(converterValue);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = hash * 31 + namespace.hashCode();
+        hash = hash * 31 + templateId.hashCode();
+        hash = hash * 31 + dataDefinition.hashCode();
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof PropertyElement) {
+            PropertyElement otherPropertyElement = (PropertyElement) obj;
+            return dataDefinition.equals(otherPropertyElement.dataDefinition);
+        }
+        return false;
     }
 }

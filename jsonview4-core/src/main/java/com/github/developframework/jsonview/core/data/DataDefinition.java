@@ -41,4 +41,22 @@ public class DataDefinition {
             }
         }
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = hash * 31 + functionSign.hashCode();
+        hash = hash * 31 + expression.hashCode();
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if(obj instanceof DataDefinition) {
+            DataDefinition otherDataDefinition = (DataDefinition) obj;
+            return functionSign == otherDataDefinition.functionSign && expression.equals(otherDataDefinition.expression);
+        }
+        return false;
+    }
 }
