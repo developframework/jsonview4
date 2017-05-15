@@ -30,8 +30,17 @@ public class IfProcessor extends FunctionalProcessor<IfElement, ObjectNode> {
 
     @Override
     protected void process(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
-        Optional<Object> conditionOptional = processContext.getDataModel().getData(element.getConditionValue());
-        Object condition = conditionOptional.orElseThrow(() -> new JsonviewException("\"%s\" condition is undefined.", element.getConditionValue()));
+        final String conditionValue = element.getConditionValue();
+        Optional<Object> conditionOptional = processContext.getDataModel().getData(conditionValue);
+        Object condition = conditionOptional.orElseGet(() -> {
+            try {
+                return Class.forName(conditionValue).newInstance();
+            } catch (ClassNotFoundException e) {
+                throw new JsonviewException("The condition's Class \"%s\" not found, and it's also not a expression.", conditionValue);
+            } catch (IllegalAccessException | InstantiationException e) {
+                throw new JsonviewException("Can't new condition instance.");
+            }
+        });
         if (condition instanceof Condition) {
             // 验证条件
             if (((Condition) condition).verify(processContext.getDataModel(), parentProcessor.getExpression())) {
