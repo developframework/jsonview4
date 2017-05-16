@@ -92,12 +92,12 @@
 						</xs:complexContent>
 					</xs:complexType>
 				</xs:element>
-				<xs:element name="mapping-object">
+				<xs:element name="relevance">
 					<xs:complexType>
 						<xs:complexContent>
 							<xs:extension base="containerElementType">
-								<xs:attribute name="source" type="xs:string" use="required"></xs:attribute>
-								<xs:attribute name="target" type="xs:string" use="required"></xs:attribute>
+								<xs:attribute name="rel-function" type="xs:string" use="required"/>
+								<xs:attribute name="map-function" type="xs:string" />
 								<xs:attribute name="type">
 									<xs:simpleType>
 										<xs:restriction base="xs:string">
