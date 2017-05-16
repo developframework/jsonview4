@@ -34,7 +34,7 @@ public class RelevanceProcessor extends FunctionalProcessor<RelevanceElement, Ob
         final ArrayExpression arrayExpression = (ArrayExpression) objectInArrayProcessor.getExpression();
         Optional<Object> itemOptional = processContext.getDataModel().getData(arrayExpression);
         if (itemOptional.isPresent()) {
-            RelFunction relFunction = getRelevanceInstance(element.getRelFunctionValue());
+            RelFunction relFunction = getRelFunctionInstance(element.getRelFunctionValue());
             Object[] targets = getTargets();
             List<Integer> indexList = new LinkedList<>();
             for (int i = 0; i < targets.length; i++) {
@@ -50,7 +50,7 @@ public class RelevanceProcessor extends FunctionalProcessor<RelevanceElement, Ob
         }
     }
 
-    private RelFunction getRelevanceInstance(String functionValue) {
+    private RelFunction getRelFunctionInstance(String functionValue) {
         Optional<Object> converterOptional = processContext.getDataModel().getData(functionValue);
         return (RelFunction) converterOptional.orElseGet(()->{
             try {
@@ -58,10 +58,10 @@ public class RelevanceProcessor extends FunctionalProcessor<RelevanceElement, Ob
                 if (obj instanceof RelFunction) {
                     return obj;
                 } else {
-                    throw new JsonviewException(String.format("\"%s\" is not a RelFunction instance.", obj.toString()));
+                    throw new InvalidArgumentsException("rel-function", functionValue, "It's not a RelFunction instance.");
                 }
             } catch (ClassNotFoundException e) {
-                throw new JsonviewException("The RelFunction's Class \"%s\" not found, and it's also not a expression.", functionValue);
+                throw new InvalidArgumentsException("rel-function", functionValue, "class not found, and it's also not a expression.");
             } catch (IllegalAccessException | InstantiationException e) {
                 throw new JsonviewException("Can't new RelFunction instance.");
             }

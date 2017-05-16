@@ -10,6 +10,7 @@ import com.github.developframework.jsonview.core.data.DataModel;
 import com.github.developframework.jsonview.core.dynamic.MapFunction;
 import com.github.developframework.jsonview.core.element.ArrayElement;
 import com.github.developframework.jsonview.core.element.Element;
+import com.github.developframework.jsonview.core.exception.InvalidArgumentsException;
 import com.github.developframework.jsonview.core.exception.JsonviewException;
 import lombok.extern.slf4j.Slf4j;
 
@@ -134,7 +135,7 @@ public class ArrayProcessor extends ContainerProcessor<ArrayElement, ArrayNode> 
                 try {
                     return Class.forName(mapFunctionValue).newInstance();
                 } catch (ClassNotFoundException e) {
-                    throw new JsonviewException("The mapFunction's Class \"%s\" not found, and it's also not a expression.", mapFunctionValue);
+                    throw new InvalidArgumentsException("map-function", mapFunctionValue, "Class not found, and it's also not a expression.");
                 } catch (IllegalAccessException | InstantiationException e) {
                     throw new JsonviewException("Can't new mapFunction instance.");
                 }
@@ -142,7 +143,7 @@ public class ArrayProcessor extends ContainerProcessor<ArrayElement, ArrayNode> 
             if (obj instanceof MapFunction) {
                 return Optional.of(((MapFunction) obj));
             } else {
-                throw new JsonviewException("\"%s\" is not a MapFunction instance.", obj.toString());
+                throw new InvalidArgumentsException("map-function", mapFunctionValue,"It's not a MapFunction instance.");
             }
         }
         return Optional.empty();
