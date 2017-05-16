@@ -33,7 +33,13 @@ public class TemplateProcessor extends ObjectProcessor{
     }
 
     @Override
-    public void process(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
+    protected boolean prepare(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
+        // 始终为true
+        return true;
+    }
+
+    @Override
+    public void handleCoreLogic(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
         Optional<JsonviewTemplate.Extend> extendOptional = ((JsonviewTemplate) element).getExtend();
         if (extendOptional.isPresent()) {
             JsonviewTemplate.Extend extend = extendOptional.get();
@@ -43,13 +49,13 @@ public class TemplateProcessor extends ObjectProcessor{
             final ExtendPortProcessor.ExtendCallback callback = parentProcessorInCallback -> {
                 // 复制一个副本节点进行回调处理
                 DuplicateTemplateElement duplicateTemplateElement = ((JsonviewTemplate) this.element).createDuplicateTemplateElement();
-                Optional<Processor<? extends Element, ? extends JsonNode>> processorOptional = duplicateTemplateElement.createProcessor(processContext, (ObjectNode) parentProcessorInCallback.node, parentProcessorInCallback.expression);
-                processorOptional.ifPresent(processor -> processor.process(parentProcessorInCallback));
+                Processor<? extends Element, ? extends JsonNode> processor = duplicateTemplateElement.createProcessor(processContext, (ObjectNode) parentProcessorInCallback.node, parentProcessorInCallback.expression);
+                processor.process(parentProcessorInCallback);
             };
             processContext.pushExtendCallback(extend.getPort(), callback);
-            extendTemplate.createProcessor(processContext, node, expression).ifPresent(processor -> processor.process(parentProcessor));
+            extendTemplate.createProcessor(processContext, node, expression).process(parentProcessor);
         } else {
-            super.process(parentProcessor);
+            super.handleCoreLogic(parentProcessor);
         }
     }
 }

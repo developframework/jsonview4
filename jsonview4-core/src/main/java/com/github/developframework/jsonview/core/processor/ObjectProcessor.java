@@ -11,8 +11,8 @@ import java.util.Optional;
 
 /**
  * 对象节点处理器
+ *
  * @author qiuzhenhao
- * @date 2017/5/8
  */
 public class ObjectProcessor extends ContainerProcessor<ObjectElement, ObjectNode> {
 
@@ -21,13 +21,26 @@ public class ObjectProcessor extends ContainerProcessor<ObjectElement, ObjectNod
     }
 
     @Override
-    protected void process(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
+    protected boolean prepare(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
+        Optional<Object> valueOptional = processContext.getDataModel().getData(expression);
+        if (valueOptional.isPresent()) {
+            final ObjectNode objectNode = ((ObjectNode) parentProcessor.getNode()).putObject(element.showName());
+            this.setNode(objectNode);
+            this.value = valueOptional.get();
+            return true;
+        }
+        if (!element.isNullHidden()) {
+            node.putNull(element.showName());
+        }
+        return false;
+    }
+
+    @Override
+    protected void handleCoreLogic(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
         for (Iterator<Element> iterator = element.childElementIterator(); iterator.hasNext();) {
             final Element childElement = iterator.next();
-            final Optional<Processor<? extends Element, ? extends JsonNode>> nextProcessorOptional = childElement.createProcessor(processContext, node, expression);
-            nextProcessorOptional.ifPresent(nextProcessor -> {
-                nextProcessor.process(this);
-            });
+            final Processor<? extends Element, ? extends JsonNode> childProcessor = childElement.createProcessor(processContext, node, expression);
+            childProcessor.process(this);
         }
     }
 }

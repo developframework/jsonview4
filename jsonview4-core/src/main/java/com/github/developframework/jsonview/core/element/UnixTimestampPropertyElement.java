@@ -7,6 +7,7 @@ import com.github.developframework.jsonview.core.JsonviewConfiguration;
 import com.github.developframework.jsonview.core.data.DataDefinition;
 import com.github.developframework.jsonview.core.processor.ProcessContext;
 import com.github.developframework.jsonview.core.processor.Processor;
+import com.github.developframework.jsonview.core.processor.PropertyProcessor;
 import com.github.developframework.jsonview.core.processor.UnixTimestampPropertyProcessor;
 
 import java.util.Optional;
@@ -23,9 +24,9 @@ public class UnixTimestampPropertyElement extends PropertyElement{
     }
 
     @Override
-    public Optional<Processor<? extends Element, ? extends JsonNode>> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression) {
-        UnixTimestampPropertyProcessor processor = new UnixTimestampPropertyProcessor(processContext, this, parentExpression);
+    public Processor<? extends Element, ? extends JsonNode> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression) {
+        PropertyProcessor processor = new UnixTimestampPropertyProcessor(processContext, this, parentExpression);
         processor.setNode(parentNode);
-        return Optional.of(processor);
+        return processor;
     }
 }

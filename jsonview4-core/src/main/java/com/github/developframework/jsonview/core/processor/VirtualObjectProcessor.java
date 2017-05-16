@@ -1,14 +1,17 @@
 package com.github.developframework.jsonview.core.processor;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.developframework.expression.Expression;
+import com.github.developframework.jsonview.core.element.Element;
 import com.github.developframework.jsonview.core.element.ObjectElement;
 
 /**
  * 虚拟对象节点处理器
+ *
  * @author qiuzhenhao
- * @date 2017/5/9
  */
-public class VirtualObjectProcessor extends ObjectProcessor{
+public class VirtualObjectProcessor extends ObjectProcessor {
 
     public VirtualObjectProcessor(ProcessContext processContext, ObjectElement element, Expression parentExpression) {
         super(processContext, element, parentExpression);
@@ -17,5 +20,11 @@ public class VirtualObjectProcessor extends ObjectProcessor{
     @Override
     protected Expression childExpression(Expression parentExpression) {
         return parentExpression;
+    }
+
+    @Override
+    protected boolean prepare(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
+        this.node = ((ObjectNode) parentProcessor.getNode()).putObject(element.showName());
+        return true;
     }
 }

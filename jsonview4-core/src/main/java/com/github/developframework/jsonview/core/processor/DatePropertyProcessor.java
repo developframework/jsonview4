@@ -1,7 +1,9 @@
 package com.github.developframework.jsonview.core.processor;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.developframework.expression.Expression;
+import com.github.developframework.jsonview.core.element.Element;
 import com.github.developframework.jsonview.core.element.PropertyElement;
 import org.apache.commons.lang3.StringUtils;
 
@@ -25,6 +27,11 @@ public class DatePropertyProcessor extends PropertyProcessor{
 
     public DatePropertyProcessor(ProcessContext processContext, PropertyElement element, Expression parentExpression) {
         this(processContext, element, parentExpression, null);
+    }
+
+    @Override
+    protected boolean prepare(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
+        return true;
     }
 
     public DatePropertyProcessor(ProcessContext processContext, PropertyElement element, Expression parentExpression, String pattern) {

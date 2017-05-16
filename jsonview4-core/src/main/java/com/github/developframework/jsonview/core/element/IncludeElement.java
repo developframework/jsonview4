@@ -33,9 +33,7 @@ public class IncludeElement extends FunctionalElement {
     }
 
     @Override
-    public Optional<Processor<? extends Element, ? extends JsonNode>> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression) {
-        IncludeProcessor processor = new IncludeProcessor(processContext, this, parentExpression);
-        processor.setNode(parentNode);
-        return Optional.of(processor);
+    public Processor<? extends Element, ? extends JsonNode> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression) {
+        return new IncludeProcessor(processContext, this, parentExpression, parentNode);
     }
 }

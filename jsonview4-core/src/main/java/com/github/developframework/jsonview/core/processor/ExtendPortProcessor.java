@@ -6,17 +6,18 @@ import com.github.developframework.jsonview.core.element.Element;
 import com.github.developframework.jsonview.core.element.ExtendPortElement;
 
 /**
+ * 扩展端口处理器
  * @author qiuzhenhao
  * @date 2017/5/8
  */
 public class ExtendPortProcessor extends FunctionalProcessor<ExtendPortElement, JsonNode>{
 
-    public ExtendPortProcessor(ProcessContext processContext, ExtendPortElement element, Expression parentExpression) {
-        super(processContext, element, parentExpression);
+    public ExtendPortProcessor(ProcessContext processContext, ExtendPortElement element, Expression parentExpression, JsonNode node) {
+        super(processContext, element, parentExpression, node);
     }
 
     @Override
-    protected void process(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
+    protected void handleCoreLogic(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
         processContext.getExtendCallback(element.getPortName()).ifPresent(extendCallback -> extendCallback.call(parentProcessor));
     }
 

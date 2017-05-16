@@ -2,6 +2,7 @@ package com.github.developframework.jsonview.core.processor;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.github.developframework.expression.Expression;
+import com.github.developframework.jsonview.core.element.Element;
 import com.github.developframework.jsonview.core.element.FunctionalElement;
 
 /**
@@ -12,13 +13,19 @@ import com.github.developframework.jsonview.core.element.FunctionalElement;
 public abstract class FunctionalProcessor<ELEMENT extends FunctionalElement, NODE extends JsonNode> extends Processor<ELEMENT, NODE> {
 
 
-    public FunctionalProcessor(ProcessContext processContext, ELEMENT element, Expression parentExpression) {
+    public FunctionalProcessor(ProcessContext processContext, ELEMENT element, Expression parentExpression, NODE node) {
         super(processContext, element, parentExpression);
+        this.node = node;
     }
 
     @Override
     protected Expression childExpression(Expression parentExpression) {
         return parentExpression;
+    }
+
+    @Override
+    protected boolean prepare(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
+        return true;
     }
 
 }

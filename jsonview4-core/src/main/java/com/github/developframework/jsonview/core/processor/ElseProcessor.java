@@ -12,12 +12,11 @@ import java.util.Optional;
 /**
  * Else节点处理器
  * @author qiuzhenhao
- * @date 2017/5/10
  */
 public class ElseProcessor extends FunctionalProcessor<ElseElement, ObjectNode>{
 
-    public ElseProcessor(ProcessContext processContext, ElseElement element, Expression parentExpression) {
-        super(processContext, element, parentExpression);
+    public ElseProcessor(ProcessContext processContext, ElseElement element, Expression parentExpression, ObjectNode node) {
+        super(processContext, element, parentExpression, node);
     }
 
     @Override
@@ -26,11 +25,11 @@ public class ElseProcessor extends FunctionalProcessor<ElseElement, ObjectNode>{
     }
 
     @Override
-    protected void process(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
+    protected void handleCoreLogic(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
         for (Iterator<Element> iterator = element.childElementIterator(); iterator.hasNext();) {
             final Element childElement = iterator.next();
-            final Optional<Processor<? extends Element, ? extends JsonNode>> nextProcessorOptional = childElement.createProcessor(processContext, node, expression);
-            nextProcessorOptional.ifPresent(nextProcessor -> nextProcessor.process(parentProcessor));
+            final Processor<? extends Element, ? extends JsonNode> nextProcessor = childElement.createProcessor(processContext, node, expression);
+            nextProcessor.process(parentProcessor);
         }
     }
 }

@@ -14,7 +14,6 @@ import java.util.Optional;
 /**
  * 抽象的属性节点处理器
  * @author qiuzhenhao
- * @date 2017/5/8
  */
 public abstract class PropertyProcessor extends ContentProcessor<PropertyElement, JsonNode>{
 
@@ -23,7 +22,7 @@ public abstract class PropertyProcessor extends ContentProcessor<PropertyElement
     }
 
     @Override
-    protected void process(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
+    protected void handleCoreLogic(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
         DataModel dataModel = processContext.getDataModel();
         Optional<Object> valueOptional = dataModel.getData(expression);
         ObjectNode parentNode = (ObjectNode) parentProcessor.getNode();

@@ -2,6 +2,7 @@ package com.github.developframework.jsonview.core.data;
 
 import com.github.developframework.expression.Expression;
 import com.github.developframework.expression.ExpressionUtils;
+import com.github.developframework.jsonview.core.exception.DataUndefinedException;
 import lombok.Getter;
 
 import java.util.HashMap;
@@ -11,7 +12,6 @@ import java.util.Optional;
 /**
  * Hash数据模型
  * @author qiuzhenhao
- * @date 2017/5/8
  */
 public class HashDataModel implements DataModel{
 
@@ -38,6 +38,20 @@ public class HashDataModel implements DataModel{
     @Override
     public Optional<Object> getData(String expressionValue) {
         return getData(Expression.parse(expressionValue));
+    }
+
+    @Override
+    public Object getDataRequired(Expression expression) {
+        Object value = ExpressionUtils.getValue(dataMap, expression);
+        if(value == null) {
+            throw new DataUndefinedException(expression.toString());
+        }
+        return value;
+    }
+
+    @Override
+    public Object getDataRequired(String expressionValue) {
+        return getDataRequired(Expression.parse(expressionValue));
     }
 
 

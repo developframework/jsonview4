@@ -21,8 +21,8 @@ import java.util.function.Function;
 
 /**
  * 数组节点处理器
+ *
  * @author qiuzhenhao
- * @date 2017/5/8
  */
 @Slf4j
 public class ArrayProcessor extends ContainerProcessor<ArrayElement, ArrayNode> {
@@ -40,16 +40,28 @@ public class ArrayProcessor extends ContainerProcessor<ArrayElement, ArrayNode> 
     }
 
     @Override
-    public void process(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
-        final DataModel dataModel = processContext.getDataModel();
-        final Optional<Object> objOptional = dataModel.getData(expression);
-        if (objOptional.isPresent()) {
-            Object obj = objOptional.get();
+    protected boolean prepare(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
+        Optional<Object> optional = processContext.getDataModel().getData(expression);
+        if (optional.isPresent()) {
+            this.node = ((ObjectNode) parentProcessor.getNode()).putArray(element.showName());
+            return true;
+        }
+        if (!element.isNullHidden()) {
+            ((ObjectNode) parentProcessor.getNode()).putNull(element.showName());
+        }
+        return false;
+    }
+
+    @Override
+    protected void handleCoreLogic(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
+        final Optional<Object> valueOptional = processContext.getDataModel().getData(expression);
+        if (valueOptional.isPresent()) {
+            this.value = valueOptional.get();
             int size = 0;
-            if (obj.getClass().isArray()) {
-                size = ((Object[]) obj).length;
-            } else if (obj instanceof Collection<?>) {
-                size = ((Collection<?>) obj).size();
+            if (value.getClass().isArray()) {
+                size = ((Object[]) value).length;
+            } else if (value instanceof Collection<?>) {
+                size = ((Collection<?>) value).size();
             }
             for (int i = 0; i < size; i++) {
                 single(ArrayExpression.fromObject((ObjectExpression) expression, i), size);
@@ -57,10 +69,11 @@ public class ArrayProcessor extends ContainerProcessor<ArrayElement, ArrayNode> 
         }
     }
 
-    protected void process(Processor<? extends Element, ? extends JsonNode> parentProcessor, List<Expression> expressionList) {
-        int size = expressionList.size();
-        for (Expression expression : expressionList) {
-            single((ArrayExpression) expression, size);
+    public void process(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor, List<ArrayExpression> expressions) {
+        if(prepare(parentProcessor)) {
+            for (ArrayExpression arrayExpression : expressions) {
+                single(arrayExpression, expressions.size());
+            }
         }
     }
 
@@ -121,7 +134,7 @@ public class ArrayProcessor extends ContainerProcessor<ArrayElement, ArrayNode> 
                 try {
                     return Class.forName(mapFunctionValue).newInstance();
                 } catch (ClassNotFoundException e) {
-                    throw new JsonviewException(String.format("The mapFunction's Class \"%s\" not found, and it's also not a expression.", mapFunctionValue));
+                    throw new JsonviewException("The mapFunction's Class \"%s\" not found, and it's also not a expression.", mapFunctionValue);
                 } catch (IllegalAccessException | InstantiationException e) {
                     throw new JsonviewException("Can't new mapFunction instance.");
                 }
@@ -129,7 +142,7 @@ public class ArrayProcessor extends ContainerProcessor<ArrayElement, ArrayNode> 
             if (obj instanceof MapFunction) {
                 return Optional.of(((MapFunction) obj));
             } else {
-                throw new JsonviewException(String.format("\"%s\" is not a MapFunction instance.", obj.toString()));
+                throw new JsonviewException("\"%s\" is not a MapFunction instance.", obj.toString());
             }
         }
         return Optional.empty();

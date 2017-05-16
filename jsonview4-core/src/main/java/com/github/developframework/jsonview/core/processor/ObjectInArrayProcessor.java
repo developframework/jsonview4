@@ -1,7 +1,6 @@
 package com.github.developframework.jsonview.core.processor;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.github.developframework.expression.ArrayExpression;
 import com.github.developframework.expression.Expression;
 import com.github.developframework.jsonview.core.element.Element;
 import com.github.developframework.jsonview.core.element.ObjectElement;
@@ -26,5 +25,11 @@ public class ObjectInArrayProcessor extends ObjectProcessor {
     @Override
     protected Expression childExpression(Expression parentExpression) {
         return parentExpression;
+    }
+
+    @Override
+    protected boolean prepare(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
+        // 始终为true
+        return true;
     }
 }

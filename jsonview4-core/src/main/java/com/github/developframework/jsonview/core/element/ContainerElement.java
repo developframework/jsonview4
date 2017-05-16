@@ -44,14 +44,14 @@ public abstract class ContainerElement extends ContentElement{
      * 增加忽略属性
      * @param propertyName 属性名称
      */
-    public void addIgnoreProperty(String propertyName) {
+    public final void addIgnoreProperty(String propertyName) {
         ignorePropertyNames.add(propertyName);
     }
 
     /**
      * 加载for-class的全部属性
      */
-    public void loadForClassAllProperty() {
+    public final void loadForClassAllProperty() {
         if (forClass != null) {
             Field[] fields = forClass.getDeclaredFields();
             for (Field field : fields) {
@@ -78,7 +78,7 @@ public abstract class ContainerElement extends ContentElement{
      * 返回子节点列表的迭代器
      * @return 子节点列表的迭代器
      */
-    public Iterator<Element> childElementIterator() {
+    public final Iterator<Element> childElementIterator() {
         return childElements.iterator();
     }
 
@@ -86,7 +86,7 @@ public abstract class ContainerElement extends ContentElement{
      * 判断是否是空子节点
      * @return 判断结果
      */
-    public boolean isChildElementEmpty() {
+    public final boolean isChildElementEmpty() {
         return childElements.isEmpty();
     }
 

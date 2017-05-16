@@ -8,6 +8,7 @@ import com.github.developframework.jsonview.core.data.DataDefinition;
 import com.github.developframework.jsonview.core.processor.NormalPropertyProcessor;
 import com.github.developframework.jsonview.core.processor.ProcessContext;
 import com.github.developframework.jsonview.core.processor.Processor;
+import com.github.developframework.jsonview.core.processor.PropertyProcessor;
 
 import java.util.Optional;
 
@@ -23,9 +24,9 @@ public class NormalPropertyElement extends PropertyElement{
     }
 
     @Override
-    public Optional<Processor<? extends Element, ? extends JsonNode>> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression) {
-        NormalPropertyProcessor processor = new NormalPropertyProcessor(processContext, this, parentExpression);
+    public Processor<? extends Element, ? extends JsonNode> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression) {
+        PropertyProcessor processor = new NormalPropertyProcessor(processContext, this, parentExpression);
         processor.setNode(parentNode);
-        return Optional.of(processor);
+        return processor;
     }
 }

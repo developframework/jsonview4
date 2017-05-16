@@ -1,13 +1,14 @@
 package com.github.developframework.jsonview.core.processor;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.github.developframework.expression.Expression;
 import com.github.developframework.jsonview.core.element.ArrayElement;
+import com.github.developframework.jsonview.core.element.Element;
 import com.github.developframework.jsonview.core.element.JsonviewTemplate;
 
 /**
  * 数组模板处理器
  * @author qiuzhenhao
- * @date 2017/5/8
  */
 public class ArrayTemplateProcessor extends ArrayProcessor{
 
@@ -21,5 +22,11 @@ public class ArrayTemplateProcessor extends ArrayProcessor{
     @Override
     protected Expression childExpression(Expression parentExpression) {
         return parentExpression;
+    }
+
+    @Override
+    protected boolean prepare(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
+        // 始终为true
+        return true;
     }
 }

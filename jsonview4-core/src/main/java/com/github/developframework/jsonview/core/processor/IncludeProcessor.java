@@ -14,12 +14,12 @@ import com.github.developframework.jsonview.core.element.JsonviewTemplate;
  * @date 2017/5/8
  */
 public class IncludeProcessor extends FunctionalProcessor<IncludeElement, ObjectNode>{
-    public IncludeProcessor(ProcessContext processContext, IncludeElement element, Expression parentExpression) {
-        super(processContext, element, parentExpression);
+    public IncludeProcessor(ProcessContext processContext, IncludeElement element, Expression parentExpression, ObjectNode node) {
+        super(processContext, element, parentExpression, node);
     }
 
     @Override
-    protected void process(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
+    protected void handleCoreLogic(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
         JsonviewConfiguration jsonviewConfiguration = processContext.getJsonviewConfiguration();
         JsonviewTemplate jsonviewTemplate = jsonviewConfiguration.extractTemplate(element.getTargetNamespace(), element.getTargetTemplateId());
         TemplateProcessor templateProcessor = new TemplateProcessor(processContext, jsonviewTemplate, node, expression, parentProcessor.getElement().getDataDefinition());

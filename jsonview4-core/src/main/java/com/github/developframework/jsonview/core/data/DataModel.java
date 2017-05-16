@@ -8,7 +8,6 @@ import java.util.Optional;
 /**
  * 数据模型接口
  * @author qiuzhenhao
- * @date 2017/5/8
  */
 public interface DataModel extends Serializable {
 
@@ -32,5 +31,19 @@ public interface DataModel extends Serializable {
      * @return 数据值
      */
     Optional<Object> getData(String expressionValue);
+
+    /**
+     * 获得数据 如果没有抛出异常
+     * @param expression 表达式定义
+     * @return 数据值
+     */
+    Object getDataRequired(Expression expression);
+
+    /**
+     * 获得数据 如果没有抛出异常
+     * @param expressionValue 表达式字符串
+     * @return 数据值
+     */
+    Object getDataRequired(String expressionValue);
 
 }

@@ -23,9 +23,9 @@ public class DuplicateTemplateElement extends ObjectElement{
     }
 
     @Override
-    public Optional<Processor<? extends Element, ? extends JsonNode>> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression) {
+    public Processor<? extends Element, ? extends JsonNode> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression) {
         DuplicateTemplateProcessor processor = new DuplicateTemplateProcessor(processContext, this, parentExpression);
         processor.setNode(parentNode);
-        return Optional.of(processor);
+        return processor;
     }
 }

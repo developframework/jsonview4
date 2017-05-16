@@ -59,4 +59,12 @@ public class DataDefinition {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        if(functionSign == null) {
+            return expression.toString();
+        }
+        return functionSign.getSign() + expression.toString();
+    }
 }

@@ -1,7 +1,9 @@
 package com.github.developframework.jsonview.core.processor;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.developframework.expression.Expression;
+import com.github.developframework.jsonview.core.element.Element;
 import com.github.developframework.jsonview.core.element.PropertyElement;
 
 import java.util.HashSet;
@@ -30,6 +32,11 @@ public class BooleanPropertyProcessor extends PropertyProcessor{
 
     public BooleanPropertyProcessor(ProcessContext processContext, PropertyElement element, Expression parentExpression) {
         super(processContext, element, parentExpression);
+    }
+
+    @Override
+    protected boolean prepare(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
+        return true;
     }
 
     @Override

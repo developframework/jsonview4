@@ -8,6 +8,7 @@ import com.github.developframework.jsonview.core.data.DataDefinition;
 import com.github.developframework.jsonview.core.processor.DatePropertyProcessor;
 import com.github.developframework.jsonview.core.processor.ProcessContext;
 import com.github.developframework.jsonview.core.processor.Processor;
+import com.github.developframework.jsonview.core.processor.PropertyProcessor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,9 +30,9 @@ public class DatePropertyElement extends PropertyElement{
     }
 
     @Override
-    public Optional<Processor<? extends Element, ? extends JsonNode>> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression) {
-        DatePropertyProcessor processor = new DatePropertyProcessor(processContext, this, parentExpression, pattern);
+    public Processor<? extends Element, ? extends JsonNode> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression) {
+        PropertyProcessor processor = new DatePropertyProcessor(processContext, this, parentExpression, pattern);
         processor.setNode(parentNode);
-        return Optional.of(processor);
+        return processor;
     }
 }

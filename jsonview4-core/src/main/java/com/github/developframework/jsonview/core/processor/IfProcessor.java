@@ -15,12 +15,11 @@ import java.util.Optional;
  * if节点处理器
  *
  * @author qiuzhenhao
- * @date 2017/5/9
  */
 public class IfProcessor extends FunctionalProcessor<IfElement, ObjectNode> {
 
-    public IfProcessor(ProcessContext processContext, IfElement element, Expression parentExpression) {
-        super(processContext, element, parentExpression);
+    public IfProcessor(ProcessContext processContext, IfElement element, Expression parentExpression, ObjectNode node) {
+        super(processContext, element, parentExpression, node);
     }
 
     @Override
@@ -29,7 +28,7 @@ public class IfProcessor extends FunctionalProcessor<IfElement, ObjectNode> {
     }
 
     @Override
-    protected void process(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
+    protected void handleCoreLogic(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
         final String conditionValue = element.getConditionValue();
         Optional<Object> conditionOptional = processContext.getDataModel().getData(conditionValue);
         Object condition = conditionOptional.orElseGet(() -> {
@@ -63,8 +62,8 @@ public class IfProcessor extends FunctionalProcessor<IfElement, ObjectNode> {
     private void executeIfTrue(final ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
         for (Iterator<Element> iterator = element.childElementIterator(); iterator.hasNext(); ) {
             final Element childElement = iterator.next();
-            final Optional<Processor<? extends Element, ? extends JsonNode>> nextProcessorOptional = childElement.createProcessor(processContext, node, expression);
-            nextProcessorOptional.ifPresent(nextProcessor -> nextProcessor.process(parentProcessor));
+            final Processor<? extends Element, ? extends JsonNode> nextProcessor = childElement.createProcessor(processContext, node, expression);
+            nextProcessor.process(parentProcessor);
         }
     }
 
@@ -75,8 +74,8 @@ public class IfProcessor extends FunctionalProcessor<IfElement, ObjectNode> {
      */
     private void executeIfFalse(final ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
         element.getElseElement().ifPresent(elseElement -> {
-            Optional<Processor<? extends Element, ? extends JsonNode>> elseProcessorOptional = elseElement.createProcessor(processContext, (ObjectNode) parentProcessor.getNode(), parentProcessor.getExpression());
-            elseProcessorOptional.ifPresent(elseProcessor -> elseProcessor.process(parentProcessor));
+            Processor<? extends Element, ? extends JsonNode> elseProcessor = elseElement.createProcessor(processContext, (ObjectNode) parentProcessor.getNode(), parentProcessor.getExpression());
+            elseProcessor.process(parentProcessor);
         });
     }
 

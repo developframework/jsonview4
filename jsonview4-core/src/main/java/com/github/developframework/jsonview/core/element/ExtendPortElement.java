@@ -27,9 +27,7 @@ public class ExtendPortElement extends FunctionalElement{
     }
 
     @Override
-    public Optional<Processor<? extends Element, ? extends JsonNode>> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression) {
-        ExtendPortProcessor processor = new ExtendPortProcessor(processContext, this, parentExpression);
-        processor.setNode(parentNode);
-        return Optional.of(processor);
+    public Processor<? extends Element, ? extends JsonNode> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression) {
+        return new ExtendPortProcessor(processContext, this, parentExpression, parentNode);
     }
 }

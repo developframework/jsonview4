@@ -17,7 +17,6 @@ import java.util.Optional;
 /**
  * 数组节点
  * @author qiuzhenhao
- * @date 2017/5/8
  */
 public class ArrayElement extends ContainerElement{
 
@@ -34,24 +33,20 @@ public class ArrayElement extends ContainerElement{
     }
 
     @Override
-    public Optional<Processor<? extends Element, ? extends JsonNode>> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression) {
-        ArrayProcessor processor = new ArrayProcessor(processContext, this, parentExpression);
-        Optional<Object> optional = processContext.getDataModel().getData(processor.getExpression());
-        if (optional.isPresent()) {
-            final ArrayNode arrayNode = parentNode.putArray(this.showName());
-            processor.setNode(arrayNode);
-            return Optional.of(processor);
-        }
-        if (!nullHidden) {
-            parentNode.putNull(this.showName());
-        }
-        return Optional.empty();
+    public Processor<? extends Element, ? extends JsonNode> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression) {
+        return new ArrayProcessor(processContext, this, parentExpression);
     }
 
     @Override
     public void addChildElement(Element element) {
         super.addChildElement(element);
         this.itemObjectElement.addChildElement(element);
+    }
+
+    @Override
+    public void copyChildElement(ContainerElement otherContainerElement) {
+        super.copyChildElement(otherContainerElement);
+        this.itemObjectElement.copyChildElement(otherContainerElement);
     }
 
     public Optional<String> getMapFunctionValueOptional() {

@@ -30,10 +30,8 @@ public class IfElement extends FunctionalElement {
     }
 
     @Override
-    public Optional<Processor<? extends Element, ? extends JsonNode>> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression) {
-        IfProcessor ifProcessor = new IfProcessor(processContext, this, parentExpression);
-        ifProcessor.setNode(parentNode);
-        return Optional.of(ifProcessor);
+    public Processor<? extends Element, ? extends JsonNode> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression) {
+        return new IfProcessor(processContext, this, parentExpression, parentNode);
     }
 
     public Optional<ElseElement> getElseElement() {

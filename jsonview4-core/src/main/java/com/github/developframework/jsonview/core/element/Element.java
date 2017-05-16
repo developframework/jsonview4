@@ -36,7 +36,7 @@ public abstract class Element {
      * @param processContext 处理过程上下文
      * @param parentNode 父json树节点
      * @param parentExpression 父表达式
-     * @return 处理器的Optional
+     * @return 处理器
      */
-    public abstract Optional<Processor<? extends Element, ? extends JsonNode>> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression);
+    public abstract Processor<? extends Element, ? extends JsonNode> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression);
 }

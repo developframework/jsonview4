@@ -22,9 +22,7 @@ public class ElseElement extends FunctionalElement{
     }
 
     @Override
-    public Optional<Processor<? extends Element, ? extends JsonNode>> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression) {
-        ElseProcessor elseProcessor = new ElseProcessor(processContext, this, parentExpression);
-        elseProcessor.setNode(parentNode);
-        return Optional.of(elseProcessor);
+    public Processor<? extends Element, ? extends JsonNode> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression) {
+        return new ElseProcessor(processContext, this, parentExpression, parentNode);
     }
 }

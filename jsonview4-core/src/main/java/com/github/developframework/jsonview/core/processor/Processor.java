@@ -28,6 +28,8 @@ public abstract class Processor<ELEMENT extends Element, NODE extends JsonNode> 
 
     protected Expression expression;
 
+    protected Object value;
+
     public Processor(ProcessContext processContext, ELEMENT element, Expression parentExpression) {
         this.processContext = processContext;
         this.element = element;
@@ -42,8 +44,25 @@ public abstract class Processor<ELEMENT extends Element, NODE extends JsonNode> 
     protected abstract Expression childExpression(Expression parentExpression);
 
     /**
-     * 处理过程
-     * @param parentProcessor 父处理器
+     * 准备操作
+     * @param parentProcessor 上层处理器
+     * @return
      */
-    protected abstract void process(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor);
+    protected abstract boolean prepare(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor);
+
+    /**
+     * 处理核心逻辑
+     * @param parentProcessor 上层处理器
+     */
+    protected abstract void handleCoreLogic(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor);
+
+    /**
+     * 处理过程
+     * @param parentProcessor 上层处理器
+     */
+    public final void process(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
+        if(prepare(parentProcessor)) {
+            handleCoreLogic(parentProcessor);
+        }
+    }
 }

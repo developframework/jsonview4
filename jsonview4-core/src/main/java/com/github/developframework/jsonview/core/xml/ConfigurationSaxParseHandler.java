@@ -45,8 +45,7 @@ class ConfigurationSaxParseHandler extends DefaultHandler{
         registerElementSaxParser(new VirtualObjectElementSaxParser(configuration));
         registerElementSaxParser(new IfElementSaxParser(configuration));
         registerElementSaxParser(new ElseElementSaxParser(configuration));
-        registerElementSaxParser(new OneToOneObjectElementSaxParser(configuration));
-        registerElementSaxParser(new OneToOnePropertyElementSaxParser(configuration));
+        registerElementSaxParser(new RelevanceElementParser(configuration));
         registerElementSaxParser(new TemplateElementSaxParser(configuration));
         registerElementSaxParser(new TemplatePackageElementSaxParser(configuration));
     }
