@@ -18,8 +18,8 @@ import java.util.Optional;
  */
 public class IfProcessor extends FunctionalProcessor<IfElement, ObjectNode> {
 
-    public IfProcessor(ProcessContext processContext, IfElement element, Expression parentExpression, ObjectNode node) {
-        super(processContext, element, parentExpression, node);
+    public IfProcessor(ProcessContext processContext, IfElement element, ObjectNode node, Expression parentExpression) {
+        super(processContext, element, node, parentExpression);
     }
 
     @Override

@@ -11,11 +11,11 @@ import com.github.developframework.jsonview.core.processor.Processor;
 import java.util.Optional;
 
 /**
+ * 模板副本
  *
  * @author qiuzhenhao
- * @date 2017/5/8
  */
-public class DuplicateTemplateElement extends ObjectElement{
+public class DuplicateTemplateElement extends ObjectElement {
 
     public DuplicateTemplateElement(JsonviewConfiguration configuration, JsonviewTemplate jsonviewTemplate) {
         super(configuration, jsonviewTemplate.getNamespace(), jsonviewTemplate.getTemplateId(), null, null);

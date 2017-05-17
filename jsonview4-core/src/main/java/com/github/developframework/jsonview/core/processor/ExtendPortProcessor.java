@@ -12,8 +12,8 @@ import com.github.developframework.jsonview.core.element.ExtendPortElement;
  */
 public class ExtendPortProcessor extends FunctionalProcessor<ExtendPortElement, JsonNode>{
 
-    public ExtendPortProcessor(ProcessContext processContext, ExtendPortElement element, Expression parentExpression, JsonNode node) {
-        super(processContext, element, parentExpression, node);
+    public ExtendPortProcessor(ProcessContext processContext, ExtendPortElement element, JsonNode node, Expression parentExpression) {
+        super(processContext, element, node, parentExpression);
     }
 
     @Override

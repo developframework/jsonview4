@@ -28,6 +28,6 @@ public class ExtendPortElement extends FunctionalElement{
 
     @Override
     public Processor<? extends Element, ? extends JsonNode> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression) {
-        return new ExtendPortProcessor(processContext, this, parentExpression, parentNode);
+        return new ExtendPortProcessor(processContext, this, parentNode, parentExpression);
     }
 }

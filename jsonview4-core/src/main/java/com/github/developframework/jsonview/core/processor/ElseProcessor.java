@@ -15,8 +15,8 @@ import java.util.Optional;
  */
 public class ElseProcessor extends FunctionalProcessor<ElseElement, ObjectNode>{
 
-    public ElseProcessor(ProcessContext processContext, ElseElement element, Expression parentExpression, ObjectNode node) {
-        super(processContext, element, parentExpression, node);
+    public ElseProcessor(ProcessContext processContext, ElseElement element, ObjectNode node, Expression parentExpression) {
+        super(processContext, element, node, parentExpression);
     }
 
     @Override

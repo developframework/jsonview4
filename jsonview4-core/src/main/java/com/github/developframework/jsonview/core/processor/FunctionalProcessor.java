@@ -13,9 +13,8 @@ import com.github.developframework.jsonview.core.element.FunctionalElement;
 public abstract class FunctionalProcessor<ELEMENT extends FunctionalElement, NODE extends JsonNode> extends Processor<ELEMENT, NODE> {
 
 
-    public FunctionalProcessor(ProcessContext processContext, ELEMENT element, Expression parentExpression, NODE node) {
-        super(processContext, element, parentExpression);
-        this.node = node;
+    public FunctionalProcessor(ProcessContext processContext, ELEMENT element, NODE node, Expression parentExpression) {
+        super(processContext, element, node, parentExpression);
     }
 
     @Override

@@ -14,8 +14,8 @@ import com.github.developframework.jsonview.core.element.JsonviewTemplate;
  * @date 2017/5/8
  */
 public class IncludeProcessor extends FunctionalProcessor<IncludeElement, ObjectNode>{
-    public IncludeProcessor(ProcessContext processContext, IncludeElement element, Expression parentExpression, ObjectNode node) {
-        super(processContext, element, parentExpression, node);
+    public IncludeProcessor(ProcessContext processContext, IncludeElement element, ObjectNode node, Expression parentExpression) {
+        super(processContext, element, node, parentExpression);
     }
 
     @Override

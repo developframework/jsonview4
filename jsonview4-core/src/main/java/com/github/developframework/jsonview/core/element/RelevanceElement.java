@@ -32,7 +32,7 @@ public class RelevanceElement extends ContainerFunctionalElement {
 
     @Override
     public Processor<? extends Element, ? extends JsonNode> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression) {
-        return new RelevanceProcessor(processContext, this, parentExpression, parentNode);
+        return new RelevanceProcessor(processContext, this, parentNode, parentExpression);
     }
 
     @Override

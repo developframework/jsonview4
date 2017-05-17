@@ -34,6 +34,6 @@ public class IncludeElement extends FunctionalElement {
 
     @Override
     public Processor<? extends Element, ? extends JsonNode> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression) {
-        return new IncludeProcessor(processContext, this, parentExpression, parentNode);
+        return new IncludeProcessor(processContext, this, parentNode, parentExpression);
     }
 }

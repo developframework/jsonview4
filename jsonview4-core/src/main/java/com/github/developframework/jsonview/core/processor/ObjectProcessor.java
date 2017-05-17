@@ -17,15 +17,14 @@ import java.util.Optional;
 public class ObjectProcessor extends ContainerProcessor<ObjectElement, ObjectNode> {
 
     public ObjectProcessor(ProcessContext processContext, ObjectElement element, Expression parentExpression) {
-        super(processContext, element, parentExpression);
+        super(processContext, element,  parentExpression);
     }
 
     @Override
     protected boolean prepare(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
         Optional<Object> valueOptional = processContext.getDataModel().getData(expression);
         if (valueOptional.isPresent()) {
-            final ObjectNode objectNode = ((ObjectNode) parentProcessor.getNode()).putObject(element.showName());
-            this.setNode(objectNode);
+            this.node = ((ObjectNode) parentProcessor.getNode()).putObject(element.showName());
             this.value = valueOptional.get();
             return true;
         }

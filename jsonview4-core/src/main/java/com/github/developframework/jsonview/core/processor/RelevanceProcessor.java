@@ -24,8 +24,8 @@ import java.util.stream.Collectors;
 public class RelevanceProcessor extends FunctionalProcessor<RelevanceElement, ObjectNode> {
 
 
-    public RelevanceProcessor(ProcessContext processContext, RelevanceElement element, Expression parentExpression, ObjectNode node) {
-        super(processContext, element, parentExpression, node);
+    public RelevanceProcessor(ProcessContext processContext, RelevanceElement element, ObjectNode node, Expression parentExpression) {
+        super(processContext, element, node, parentExpression);
     }
 
     @Override

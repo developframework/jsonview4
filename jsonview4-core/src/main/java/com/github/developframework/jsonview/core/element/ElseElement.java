@@ -22,6 +22,6 @@ public class ElseElement extends ContainerFunctionalElement{
 
     @Override
     public Processor<? extends Element, ? extends JsonNode> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression) {
-        return new ElseProcessor(processContext, this, parentExpression, parentNode);
+        return new ElseProcessor(processContext, this, parentNode, parentExpression);
     }
 }

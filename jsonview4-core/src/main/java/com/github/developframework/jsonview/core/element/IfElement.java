@@ -31,7 +31,7 @@ public class IfElement extends ContainerFunctionalElement {
 
     @Override
     public Processor<? extends Element, ? extends JsonNode> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression) {
-        return new IfProcessor(processContext, this, parentExpression, parentNode);
+        return new IfProcessor(processContext, this, parentNode, parentExpression);
     }
 
     public Optional<ElseElement> getElseElement() {

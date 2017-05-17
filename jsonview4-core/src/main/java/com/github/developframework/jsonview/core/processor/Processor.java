@@ -30,9 +30,10 @@ public abstract class Processor<ELEMENT extends Element, NODE extends JsonNode> 
 
     protected Object value;
 
-    public Processor(ProcessContext processContext, ELEMENT element, Expression parentExpression) {
+    public Processor(ProcessContext processContext, ELEMENT element, NODE node, Expression parentExpression) {
         this.processContext = processContext;
         this.element = element;
+        this.node = node;
         this.expression = childExpression(parentExpression);
     }
 
