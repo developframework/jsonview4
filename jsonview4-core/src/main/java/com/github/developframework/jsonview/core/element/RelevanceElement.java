@@ -16,7 +16,7 @@ import lombok.Setter;
  *
  * @author qiuzhenhao
  */
-public class RelevanceElement extends FunctionalElement {
+public class RelevanceElement extends ContainerFunctionalElement {
 
     @Getter
     @Setter
@@ -37,7 +37,6 @@ public class RelevanceElement extends FunctionalElement {
 
     @Override
     public void addChildElement(Element element) {
-        super.addChildElement(element);
         arrayElement.addChildElement(element);
     }
 

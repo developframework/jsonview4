@@ -25,6 +25,18 @@ public class DatePropertyProcessor extends PropertyProcessor{
     // 支持的类型集合
     private static final Set<Class<?>> ACCEPT_CLASS_SET = new HashSet<>(9);
 
+    static {
+        ACCEPT_CLASS_SET.add(java.util.Date.class);
+        ACCEPT_CLASS_SET.add(java.util.Calendar.class);
+        ACCEPT_CLASS_SET.add(java.sql.Date.class);
+        ACCEPT_CLASS_SET.add(java.sql.Time.class);
+        ACCEPT_CLASS_SET.add(java.sql.Timestamp.class);
+        ACCEPT_CLASS_SET.add(java.time.LocalDate.class);
+        ACCEPT_CLASS_SET.add(java.time.LocalDateTime.class);
+        ACCEPT_CLASS_SET.add(java.time.LocalTime.class);
+        ACCEPT_CLASS_SET.add(java.time.Instant.class);
+    }
+
     public DatePropertyProcessor(ProcessContext processContext, PropertyElement element, Expression parentExpression) {
         this(processContext, element, parentExpression, null);
     }
@@ -37,15 +49,7 @@ public class DatePropertyProcessor extends PropertyProcessor{
     public DatePropertyProcessor(ProcessContext processContext, PropertyElement element, Expression parentExpression, String pattern) {
         super(processContext, element, parentExpression);
         dateFormat = new SimpleDateFormat(StringUtils.isBlank(pattern) ? "yyyy-MM-dd HH:mm:ss" : pattern);
-        ACCEPT_CLASS_SET.add(java.util.Date.class);
-        ACCEPT_CLASS_SET.add(java.util.Calendar.class);
-        ACCEPT_CLASS_SET.add(java.sql.Date.class);
-        ACCEPT_CLASS_SET.add(java.sql.Time.class);
-        ACCEPT_CLASS_SET.add(java.sql.Timestamp.class);
-        ACCEPT_CLASS_SET.add(java.time.LocalDate.class);
-        ACCEPT_CLASS_SET.add(java.time.LocalDateTime.class);
-        ACCEPT_CLASS_SET.add(java.time.LocalTime.class);
-        ACCEPT_CLASS_SET.add(java.time.Instant.class);
+
     }
 
     @Override

@@ -17,7 +17,7 @@ import java.util.Optional;
  * @author qiuzhenhao
  * @date 2017/5/9
  */
-public class IfElement extends FunctionalElement {
+public class IfElement extends ContainerFunctionalElement {
 
     @Getter
     private String conditionValue;

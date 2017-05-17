@@ -9,7 +9,6 @@ import org.xml.sax.Attributes;
 /**
  * 内容节点解析器
  * @author qiuzhenhao
- * @date 2017/5/7
  * @param <T> 节点类型
  */
 abstract class ContentElementSaxParser<T extends Element> extends AbstractElementSaxParser{

@@ -10,7 +10,6 @@ import lombok.Getter;
  * 数组元素处理器
  *
  * @author qiuzhenhao
- * @date 2017/5/8
  */
 public class ObjectInArrayProcessor extends ObjectProcessor {
 

@@ -35,14 +35,14 @@ class ConfigurationSaxParseHandler extends DefaultHandler{
     private void registerDefaultElementSaxParser() {
         registerElementSaxParser(new PropertyElementSaxParser(configuration));
         registerElementSaxParser(new DatePropertyElementSaxParser(configuration));
-        registerElementSaxParser(new UnixTimestampPropertyElementSaxParser(configuration));
-        registerElementSaxParser(new BooleanPropertyElementSaxParser(configuration));
-        registerElementSaxParser(new ExtendPortElementSaxParser(configuration));
-        registerElementSaxParser(new IgnorePropertyElementSaxParser(configuration));
         registerElementSaxParser(new ObjectElementSaxParser(configuration));
         registerElementSaxParser(new ArrayElementSaxParser(configuration));
         registerElementSaxParser(new IncludeElementSaxParser(configuration));
         registerElementSaxParser(new VirtualObjectElementSaxParser(configuration));
+        registerElementSaxParser(new UnixTimestampPropertyElementSaxParser(configuration));
+        registerElementSaxParser(new BooleanPropertyElementSaxParser(configuration));
+        registerElementSaxParser(new ExtendPortElementSaxParser(configuration));
+        registerElementSaxParser(new IgnorePropertyElementSaxParser(configuration));
         registerElementSaxParser(new IfElementSaxParser(configuration));
         registerElementSaxParser(new ElseElementSaxParser(configuration));
         registerElementSaxParser(new RelevanceElementParser(configuration));

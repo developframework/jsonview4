@@ -13,9 +13,8 @@ import java.util.List;
 /**
  * 容器节点
  * @author qiuzhenhao
- * @date 2017/5/7
  */
-public abstract class ContainerElement extends ContentElement{
+public abstract class ContainerElement extends ContentElement implements ContainChildElementable{
 
     /* 子节点列表 */
     protected List<Element> childElements = new ArrayList<>();
@@ -30,14 +29,6 @@ public abstract class ContainerElement extends ContentElement{
 
     public ContainerElement(JsonviewConfiguration configuration, String namespace, String templateId, DataDefinition dataDefinition, String alias) {
         super(configuration, namespace, templateId, dataDefinition, alias);
-    }
-
-    /**
-     * 增加子节点
-     * @param element 子节点
-     */
-    public void addChildElement(Element element) {
-        childElements.add(element);
     }
 
     /**
@@ -66,28 +57,29 @@ public abstract class ContainerElement extends ContentElement{
         }
     }
 
-    /**
-     * 复制来自另一个容器节点的所有子节点
-     * @param otherContainerElement 另一个容器节点
-     */
-    public void copyChildElement(ContainerElement otherContainerElement) {
-        this.childElements.addAll(otherContainerElement.childElements);
+    @Override
+    public void addChildElement(Element element) {
+        childElements.add(element);
     }
 
-    /**
-     * 返回子节点列表的迭代器
-     * @return 子节点列表的迭代器
-     */
+    @Override
+    public void copyChildElement(ContainChildElementable otherContainer) {
+        this.childElements.addAll(otherContainer.getChildElements());
+    }
+
+    @Override
     public final Iterator<Element> childElementIterator() {
         return childElements.iterator();
     }
 
-    /**
-     * 判断是否是空子节点
-     * @return 判断结果
-     */
+    @Override
     public final boolean isChildElementEmpty() {
         return childElements.isEmpty();
     }
 
+
+    @Override
+    public final List<Element> getChildElements() {
+        return childElements;
+    }
 }

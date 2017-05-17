@@ -13,9 +13,8 @@ import java.util.Optional;
 /**
  * else节点
  * @author qiuzhenhao
- * @date 2017/5/9
  */
-public class ElseElement extends FunctionalElement{
+public class ElseElement extends ContainerFunctionalElement{
 
     public ElseElement(JsonviewConfiguration configuration, String namespace, String templateId) {
         super(configuration, namespace, templateId);
