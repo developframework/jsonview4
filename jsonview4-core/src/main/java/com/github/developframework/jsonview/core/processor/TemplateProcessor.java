@@ -34,7 +34,7 @@ public class TemplateProcessor extends ObjectProcessor{
     }
 
     @Override
-    public void handleCoreLogic(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
+    protected void handleCoreLogic(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
         Optional<JsonviewTemplate.Extend> extendOptional = ((JsonviewTemplate) element).getExtend();
         if (extendOptional.isPresent()) {
             JsonviewTemplate.Extend extend = extendOptional.get();

@@ -8,10 +8,11 @@ import com.github.developframework.jsonview.core.element.Element;
 import com.github.developframework.jsonview.core.element.IncludeElement;
 import com.github.developframework.jsonview.core.element.JsonviewTemplate;
 
+import java.util.Iterator;
+
 /**
  * 包含功能节点处理器
  * @author qiuzhenhao
- * @date 2017/5/8
  */
 public class IncludeProcessor extends FunctionalProcessor<IncludeElement, ObjectNode>{
     public IncludeProcessor(ProcessContext processContext, IncludeElement element, ObjectNode node, Expression parentExpression) {
@@ -22,7 +23,10 @@ public class IncludeProcessor extends FunctionalProcessor<IncludeElement, Object
     protected void handleCoreLogic(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
         JsonviewConfiguration jsonviewConfiguration = processContext.getJsonviewConfiguration();
         JsonviewTemplate jsonviewTemplate = jsonviewConfiguration.extractTemplate(element.getTargetNamespace(), element.getTargetTemplateId());
-        TemplateProcessor templateProcessor = new TemplateProcessor(processContext, jsonviewTemplate, node, expression, parentProcessor.getElement().getDataDefinition());
-        templateProcessor.process(parentProcessor);
+        for (Iterator<Element> iterator = jsonviewTemplate.childElementIterator(); iterator.hasNext();) {
+            final Element childElement = iterator.next();
+            final Processor<? extends Element, ? extends JsonNode> childProcessor = childElement.createProcessor(processContext, node, expression);
+            childProcessor.process(parentProcessor);
+        }
     }
 }
