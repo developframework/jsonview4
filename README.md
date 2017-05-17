@@ -217,6 +217,7 @@ Jsonview configuration文档不是唯一的，Jsonview框架允许你拥有多�
 - `<include>`
 - `<object-one-to-one>`
 - `<property-one-to-one>`
+- `<relevance>`
 - `<object-virtual>`
 - `<property-ignore>`
 - `<extend-port>`
@@ -246,7 +247,7 @@ Jsonview configuration文档不是唯一的，Jsonview框架允许你拥有多�
 | data         | 取值表达式                                    | 否    |
 | for-class    | 声明data表达式指向的对象类型                         | 否    |
 | extend       | 声明继承的jsonview和端口，格式为namespace.id:port（namespace不填时默认为当前namespace） | 否    |
-| map-function | 仅当data指代的数据为数组或List时有效。java.util.function.Function的实现类全名或Expression表达式。详见[5.1.2节](#chapter512) | 否    |
+| map-function | 仅当data指代的数据为数组或List时有效。MapFunction的实现类全名或Expression表达式。详见[5.1.2节](#chapter512) | 否    |
 
 ###### b) object
 
@@ -277,7 +278,7 @@ Jsonview configuration文档不是唯一的，Jsonview框架允许你拥有多�
 | alias        | 别名，你可以重新定义显示名                            | 否    |
 | for-class    | 声明data表达式指向的对象类型                         | 否    |
 | null-hidden  | true时表示表达式取的值为null时隐藏该节点，默认为false        | 否    |
-| map-function | java.util.function.Function的实现类全名或Expression表达式。详见[5.1.2节](#chapter512) | 否    |
+| map-function | MapFunction的实现类全名或Expression表达式。详见[5.1.2节](#chapter512) | 否    |
 
 `<array>`标签可以没有子标签，这时表示数组为基本类型数组。
 
@@ -328,7 +329,7 @@ Jsonview框架提供模块化设计json结构视图的功能。在一个`<templa
 
 ###### b) property-one-to-one
 
-该标签用于实现一对一链接属性功能。详见[5.4.1.节](#chapter541)。
+该标签用于实现一对一链接功能。详见[5.4.1.节](#chapter541)。
 
 ```xml
 <property-one-to-one data="" alias="" converter="" null-hidden="true" />
@@ -340,6 +341,21 @@ Jsonview框架提供模块化设计json结构视图的功能。在一个`<templa
 | alias       | 别名，你可以重新定义显示名                     | 否    |
 | converter   | 类型转换器全限定类名或expression表达式          | 否    |
 | null-hidden | true时表示表达式取的值为null时隐藏该节点，默认为false | 否    |
+
+###### c) relevance
+该标签用于实现一对多关联功能。详见[5.4.2.节](#chapter542)。
+
+```xml
+<relevance data="" alias="" rel-function="" null-hidden="true"></relevance>
+```
+
+| 属性           | 功能                                       | 是否必须 |
+| ------------ | ---------------------------------------- | ---- |
+| data         | 取值表达式                                    | 是    |
+| alias        | 别名，你可以重新定义显示名                            | 否    |
+| rel-function | 关联判定器全限定类名或expression表达式                 | 是    |
+| null-hidden  | true时表示表达式取的值为null时隐藏该节点，默认为false        | 否    |
+| map-function | MapFunction的实现类全名或Expression表达式。详见[5.1.2节](#chapter512) | 否    |
 
 ###### d) object-virtual
 
@@ -462,6 +478,18 @@ public class Student {
 public class Account {
     private String username;
     private String password;
+}
+```
+
+```java
+// 班级类 SchoolClass.java   一个班级对应多个学生
+@Data
+@AllArgsConstructor
+public class SchoolClass {
+
+    private int id;
+
+    private String className;
 }
 ```
 
@@ -850,7 +878,7 @@ String json = jsonProducer.createJson(dataModel, "jsonview-student", "student-de
 
 `extend` 属性的写法为  namespace.templateId:portName  其中namespace可以省略，默认为当前命名空间下。
 
-### **5.4. 链接与映射**
+### **5.4. 链接与关联**
 
 #### <a name="chapter541">**5.4.1. 一对一数组链接**</a>
 
@@ -916,6 +944,91 @@ dataModel.putData("scores", scores);
     "password" : "john's password"
   },
   "score" : 98
+} ]
+```
+
+#### <a name="chapter542">**5.4.2. 根据条件关联**</a>
+
+假如A数组有2个元素，B数组有3个元素。其中A[0] 需要关联B[0]和B[1]， A[1] 需要关联B[2]。这种需求下就可以使用`<relevance>`标签，实现在数组间一对多关联。属性`rel-function` 指定判定条件，需要实现一个接口：
+
+```java
+public interface RelFunction<S, T> {
+
+    boolean relevant(S sourceItem, int sourceIndex, T target, int targetIndex);
+}
+```
+
+其中泛型S指代A数组类型，T指代B数组类型。
+
+sourceItem是迭代了A数组的每一项，sourceIndex是它的索引。每一项的A元素都会去迭代B数组的每一项target，targetIndex是索引，`relevant` 方法返回true表示需要关联。
+
+具体看示例，有如下数据结构关系：
+
+```java
+// 1班
+SchoolClass schoolClass1 = new SchoolClass(1, "1班");
+// 2班
+SchoolClass schoolClass2 = new SchoolClass(2, "2班");
+// 1班的学生
+Student peter = new Student(1, "Peter", 1, "1995-01-01");
+Student john = new Student(2, "John", 1, "1996-5-20");
+// 2班的学生
+Student bill = new Student(3, "Bill", 2, "1993-4-16");
+
+Student[] students = {peter, john, bill};
+SchoolClass[] schoolClasses = {schoolClass1, schoolClass2};
+dataModel.putData("students", students);
+dataModel.putData("schoolClasses", schoolClasses);
+```
+
+
+
+```xml
+<template-package namespace="jsonview-student">
+  <template id="student-detail">
+    <property data="name"/>
+    <property-date data="birthday" pattern="yyyy-MM-dd"/>
+  </template>
+</template-package>
+
+<template-package namespace="jsonview-class">
+  <template id="class-list" data="schoolClasses">
+    <property data="id" />
+    <property data="className" />
+    <!-- 关联学生列表 -->
+    <relevance data="#students" rel-function="rel-function">
+      <include id="student-detail" namespace="jsonview-student" />
+    </relevance>
+  </template>
+</template-package>
+```
+
+实现`RelFunction`
+
+```java
+dataModel.putData("rel-function", (RelFunction<SchoolClass, Student>) (sourceItem, sourceIndex, target, targetIndex) -> sourceItem.getId() == target.getClassId());
+```
+
+判定条件为当SchoolClass（sourceItem）的id与Student（target）的classId相等时，允许关联。
+
+```json
+[ {
+  "id" : 1,
+  "className" : "1班",
+  "students" : [ {
+    "name" : "Peter",
+    "birthday" : "1995-01-01"
+  }, {
+    "name" : "John",
+    "birthday" : "1996-05-20"
+  } ]
+}, {
+  "id" : 2,
+  "className" : "2班",
+  "students" : [ {
+    "name" : "Bill",
+    "birthday" : "1993-04-16"
+  } ]
 } ]
 ```
 
