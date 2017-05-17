@@ -20,11 +20,6 @@ public class ElseProcessor extends FunctionalProcessor<ElseElement, ObjectNode>{
     }
 
     @Override
-    protected Expression childExpression(Expression parentExpression) {
-        return parentExpression;
-    }
-
-    @Override
     protected void handleCoreLogic(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
         for (Iterator<Element> iterator = element.childElementIterator(); iterator.hasNext();) {
             final Element childElement = iterator.next();

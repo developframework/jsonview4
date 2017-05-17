@@ -22,11 +22,6 @@ public class ObjectInArrayProcessor extends ObjectProcessor {
     }
 
     @Override
-    protected Expression childExpression(Expression parentExpression) {
-        return parentExpression;
-    }
-
-    @Override
     protected boolean prepare(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
         // 始终为true
         return true;

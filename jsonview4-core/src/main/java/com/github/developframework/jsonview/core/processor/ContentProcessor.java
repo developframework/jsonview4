@@ -17,16 +17,4 @@ public abstract class ContentProcessor<ELEMENT extends ContentElement, NODE exte
         super(processContext, element, null, parentExpression);
     }
 
-    @Override
-    protected Expression childExpression(Expression parentExpression) {
-        final DataDefinition dataDefinition = element.getDataDefinition();
-        if (dataDefinition.getFunctionSign() == FunctionSign.ROOT) {
-            return dataDefinition.getExpression();
-        }
-        if (parentExpression == null) {
-            return dataDefinition.getExpression();
-        }
-        return Expression.concat(parentExpression, dataDefinition.getExpression());
-    }
-
 }

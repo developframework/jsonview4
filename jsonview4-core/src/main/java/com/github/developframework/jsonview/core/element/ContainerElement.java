@@ -2,8 +2,10 @@ package com.github.developframework.jsonview.core.element;
 
 import com.github.developframework.jsonview.core.JsonviewConfiguration;
 import com.github.developframework.jsonview.core.data.DataDefinition;
+import com.github.developframework.jsonview.core.exception.JsonviewParseXmlException;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -21,7 +23,6 @@ public abstract class ContainerElement extends ContentElement implements Contain
 
     /* for-class定义的类型 */
     @Getter
-    @Setter
     protected Class<?> forClass;
 
     /* 忽略的属性名称列表 */
@@ -29,6 +30,20 @@ public abstract class ContainerElement extends ContentElement implements Contain
 
     public ContainerElement(JsonviewConfiguration configuration, String namespace, String templateId, DataDefinition dataDefinition, String alias) {
         super(configuration, namespace, templateId, dataDefinition, alias);
+    }
+
+    /**
+     * 设置for-class
+     * @param className 类名
+     */
+    public void setForClass(String className) {
+        if (StringUtils.isNotBlank(className)) {
+            try {
+                forClass = Class.forName(className);
+            } catch (ClassNotFoundException e) {
+                throw new JsonviewParseXmlException("Class \"%s\" is not found, please check configuration file.", className);
+            }
+        }
     }
 
     /**

@@ -25,7 +25,7 @@ public class BooleanPropertyElement extends PropertyElement{
 
     @Override
     public Processor<? extends Element, ? extends JsonNode> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression) {
-        PropertyProcessor processor = new BooleanPropertyProcessor(processContext, this, parentExpression);
+        PropertyProcessor processor = new BooleanPropertyProcessor(processContext, this, Processor.childExpression(this, parentExpression));
         processor.setNode(parentNode);
         return processor;
     }

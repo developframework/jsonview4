@@ -31,7 +31,7 @@ public class DatePropertyElement extends PropertyElement{
 
     @Override
     public Processor<? extends Element, ? extends JsonNode> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression) {
-        PropertyProcessor processor = new DatePropertyProcessor(processContext, this, parentExpression, pattern);
+        PropertyProcessor processor = new DatePropertyProcessor(processContext, this, Processor.childExpression(this, parentExpression), pattern);
         processor.setNode(parentNode);
         return processor;
     }

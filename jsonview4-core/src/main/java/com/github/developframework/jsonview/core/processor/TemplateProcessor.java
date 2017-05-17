@@ -28,11 +28,6 @@ public class TemplateProcessor extends ObjectProcessor{
     }
 
     @Override
-    protected Expression childExpression(Expression parentExpression) {
-        return parentExpression;
-    }
-
-    @Override
     protected boolean prepare(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
         // 始终为true
         return true;
@@ -53,7 +48,8 @@ public class TemplateProcessor extends ObjectProcessor{
                 processor.process(parentProcessorInCallback);
             };
             processContext.pushExtendCallback(extend.getPort(), callback);
-            extendTemplate.createProcessor(processContext, node, expression).process(parentProcessor);
+            Processor<? extends Element, ? extends JsonNode> extendTemplateProcessor = extendTemplate.createProcessor(processContext, node, expression);
+            extendTemplateProcessor.process(parentProcessor);
         } else {
             super.handleCoreLogic(parentProcessor);
         }

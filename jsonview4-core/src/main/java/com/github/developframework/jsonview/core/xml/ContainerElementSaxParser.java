@@ -24,14 +24,7 @@ abstract class ContainerElementSaxParser<T extends ContainerElement> extends Con
      * @param attributes 属性
      */
     protected final void handleForClass(ContainerElement element, Attributes attributes) {
-        final String className = attributes.getValue("for-class");
-        if (StringUtils.isNotBlank(className)) {
-            try {
-                element.setForClass(Class.forName(className));
-            } catch (ClassNotFoundException e) {
-                throw new JsonviewParseXmlException("Class \"%s\" is not found, please check configuration file.", className);
-            }
-        }
+        element.setForClass(attributes.getValue("for-class"));
     }
 
     @Override

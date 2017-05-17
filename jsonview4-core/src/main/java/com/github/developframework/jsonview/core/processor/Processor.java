@@ -2,6 +2,9 @@ package com.github.developframework.jsonview.core.processor;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.github.developframework.expression.Expression;
+import com.github.developframework.jsonview.core.data.DataDefinition;
+import com.github.developframework.jsonview.core.data.FunctionSign;
+import com.github.developframework.jsonview.core.element.ContentElement;
 import com.github.developframework.jsonview.core.element.Element;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,19 +33,29 @@ public abstract class Processor<ELEMENT extends Element, NODE extends JsonNode> 
 
     protected Object value;
 
-    public Processor(ProcessContext processContext, ELEMENT element, NODE node, Expression parentExpression) {
+    public Processor(ProcessContext processContext, ELEMENT element, NODE node, Expression expression) {
         this.processContext = processContext;
         this.element = element;
         this.node = node;
-        this.expression = childExpression(parentExpression);
+        this.expression = expression;
     }
 
     /**
      * 生成子表达式
+     * @param contentElement 内容节点
      * @param parentExpression 父表达式
      * @return 子表达式
      */
-    protected abstract Expression childExpression(Expression parentExpression);
+    public static Expression childExpression(ContentElement contentElement, Expression parentExpression) {
+        final DataDefinition dataDefinition = contentElement.getDataDefinition();
+        if (dataDefinition.getFunctionSign() == FunctionSign.ROOT) {
+            return dataDefinition.getExpression();
+        }
+        if (parentExpression == null) {
+            return dataDefinition.getExpression();
+        }
+        return Expression.concat(parentExpression, dataDefinition.getExpression());
+    }
 
     /**
      * 准备操作

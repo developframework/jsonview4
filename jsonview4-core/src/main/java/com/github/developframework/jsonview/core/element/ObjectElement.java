@@ -21,6 +21,6 @@ public class ObjectElement extends ContainerElement{
 
     @Override
     public Processor<? extends Element, ? extends JsonNode> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression) {
-        return new ObjectProcessor(processContext, this, parentExpression);
+        return new ObjectProcessor(processContext, this, Processor.childExpression(this, parentExpression));
     }
 }

@@ -18,11 +18,6 @@ public class VirtualObjectProcessor extends ObjectProcessor {
     }
 
     @Override
-    protected Expression childExpression(Expression parentExpression) {
-        return parentExpression;
-    }
-
-    @Override
     protected boolean prepare(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
         this.node = ((ObjectNode) parentProcessor.getNode()).putObject(element.showName());
         return true;

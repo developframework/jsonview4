@@ -18,11 +18,6 @@ public abstract class FunctionalProcessor<ELEMENT extends FunctionalElement, NOD
     }
 
     @Override
-    protected Expression childExpression(Expression parentExpression) {
-        return parentExpression;
-    }
-
-    @Override
     protected boolean prepare(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
         return true;
     }

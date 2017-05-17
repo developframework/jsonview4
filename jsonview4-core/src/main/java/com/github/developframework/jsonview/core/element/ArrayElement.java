@@ -34,7 +34,7 @@ public class ArrayElement extends ContainerElement{
 
     @Override
     public Processor<? extends Element, ? extends JsonNode> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression) {
-        return new ArrayProcessor(processContext, this, parentExpression);
+        return new ArrayProcessor(processContext, this, Processor.childExpression(this, parentExpression));
     }
 
     @Override

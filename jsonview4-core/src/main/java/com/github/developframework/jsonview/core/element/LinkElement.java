@@ -9,46 +9,41 @@ import com.github.developframework.jsonview.core.processor.LinkProcessor;
 import com.github.developframework.jsonview.core.processor.ObjectProcessor;
 import com.github.developframework.jsonview.core.processor.ProcessContext;
 import com.github.developframework.jsonview.core.processor.Processor;
-import lombok.Getter;
 
 /**
  * 一对一链接节点
  *
  * @author qiuzhenhao
  */
-public class LinkElement extends ContainerFunctionalElement{
-
-    @Getter
-    private ObjectElement insideObjectElement;
+public class LinkElement extends ObjectElement{
 
     public LinkElement(JsonviewConfiguration configuration, String namespace, String templateId, DataDefinition dataDefinition, String alias) {
-        super(configuration, namespace, templateId);
-        insideObjectElement = new ObjectElement(configuration, namespace, templateId, dataDefinition, alias) {
-
-            @Override
-            public Processor<? extends Element, ? extends JsonNode> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression) {
-                return new ObjectProcessor(processContext, this, parentExpression) {
-                    @Override
-                    protected Expression childExpression(Expression parentExpression) {
-                        return parentExpression;
-                    }
-                };
-            }
-        };
+        super(configuration, namespace, templateId, dataDefinition, alias);
     }
 
     @Override
     public Processor<? extends Element, ? extends JsonNode> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression) {
-        return new LinkProcessor(processContext, this, parentNode, parentExpression);
+        return new LinkProcessor(processContext, this, Processor.childExpression(this, parentExpression));
     }
 
-    @Override
-    public void addChildElement(Element element) {
-        insideObjectElement.addChildElement(element);
+    public LinkInsideObjectElement createLinkInsideObjectElement() {
+        LinkInsideObjectElement linkInsideObjectElement = new LinkInsideObjectElement(configuration, namespace, templateId, dataDefinition, alias);
+        linkInsideObjectElement.copyChildElement(this);
+        return linkInsideObjectElement;
     }
 
-    @Override
-    public void copyChildElement(ContainChildElementable otherContainer) {
-        insideObjectElement.copyChildElement(otherContainer);
+    /**
+     * 内置节点
+     */
+    public class LinkInsideObjectElement extends ObjectElement {
+
+        public LinkInsideObjectElement(JsonviewConfiguration configuration, String namespace, String templateId, DataDefinition dataDefinition, String alias) {
+            super(configuration, namespace, templateId, dataDefinition, alias);
+        }
+
+        @Override
+        public Processor<? extends Element, ? extends JsonNode> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression) {
+            return new ObjectProcessor(processContext, this, parentExpression);
+        }
     }
 }

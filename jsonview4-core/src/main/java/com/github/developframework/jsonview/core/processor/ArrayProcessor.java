@@ -58,7 +58,7 @@ public class ArrayProcessor extends ContainerProcessor<ArrayElement, ArrayNode> 
         final Optional<Object> valueOptional = processContext.getDataModel().getData(expression);
         if (valueOptional.isPresent()) {
             this.value = valueOptional.get();
-            int size = 0;
+            int size;
             if (value.getClass().isArray()) {
                 size = ((Object[]) value).length;
             } else if (value instanceof Collection<?>) {

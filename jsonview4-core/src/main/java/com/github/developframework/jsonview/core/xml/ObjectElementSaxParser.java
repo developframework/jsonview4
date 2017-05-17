@@ -8,7 +8,6 @@ import org.xml.sax.Attributes;
 /**
  * 对象节点解析器
  * @author qiuzhenhao
- * @date 2017/5/8
  */
 class ObjectElementSaxParser extends ContainerElementSaxParser<ObjectElement>{
 

@@ -23,11 +23,6 @@ public class IfProcessor extends FunctionalProcessor<IfElement, ObjectNode> {
     }
 
     @Override
-    protected Expression childExpression(Expression parentExpression) {
-        return parentExpression;
-    }
-
-    @Override
     protected void handleCoreLogic(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
         final String conditionValue = element.getConditionValue();
         Optional<Object> conditionOptional = processContext.getDataModel().getData(conditionValue);
