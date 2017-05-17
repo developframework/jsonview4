@@ -25,18 +25,18 @@ public abstract class ContainerFunctionalElement extends FunctionalElement imple
     }
 
     @Override
-    public Iterator<Element> childElementIterator() {
+    public void copyChildElement(ContainChildElementable otherContainer) {
+        this.childElements.addAll(otherContainer.getChildElements());
+    }
+
+    @Override
+    public final Iterator<Element> childElementIterator() {
         return childElements.iterator();
     }
 
     @Override
     public final List<Element> getChildElements() {
         return childElements;
-    }
-
-    @Override
-    public final void copyChildElement(ContainChildElementable otherContainer) {
-        this.childElements.addAll(otherContainer.getChildElements());
     }
 
     @Override

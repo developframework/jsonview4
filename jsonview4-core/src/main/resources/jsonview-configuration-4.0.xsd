@@ -67,11 +67,6 @@
 						<xs:attribute name="name" type="xs:string" use="required" />
 					</xs:complexType>
 				</xs:element>
-				<xs:element name="property-one-to-one">
-					<xs:complexType>
-						<xs:attributeGroup ref="attrGroupForPropertyElement" />
-					</xs:complexType>
-				</xs:element>
 				<xs:element name="object">
 					<xs:complexType>
 						<xs:complexContent>
@@ -85,7 +80,7 @@
 						<xs:attribute name="alias" type="xs:string" use="required" />
 					</xs:complexType>
 				</xs:element>
-				<xs:element name="object-one-to-one">
+				<xs:element name="link">
 					<xs:complexType>
 						<xs:complexContent>
 							<xs:extension base="containerElementType" />

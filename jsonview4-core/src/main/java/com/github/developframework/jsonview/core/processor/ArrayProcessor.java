@@ -63,6 +63,8 @@ public class ArrayProcessor extends ContainerProcessor<ArrayElement, ArrayNode> 
                 size = ((Object[]) value).length;
             } else if (value instanceof Collection<?>) {
                 size = ((Collection<?>) value).size();
+            } else {
+                throw new InvalidArgumentsException("data", expression.toString(), "Data must be array or List type.");
             }
             for (int i = 0; i < size; i++) {
                 single(ArrayExpression.fromObject((ObjectExpression) expression, i), size);
