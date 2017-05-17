@@ -449,6 +449,8 @@ Jsonview框架提供模块化设计json结构视图的功能。在一个`<templa
 // 学生类 Student.java
 @Data
 public class Student {
+    // 编号
+    private int id;
     // 学生名称
     private String name;
     // 班级ID
@@ -456,7 +458,8 @@ public class Student {
     // 出生日期
     private Date birthday;
 
-    public Student(String name, int classId, String birthday) {
+    public Student(int id, String name, int classId, String birthday) {
+        this.id = id;
         this.name = name;
         this.classId = classId;
         if(birthday != null) {
