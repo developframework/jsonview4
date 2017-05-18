@@ -15,8 +15,8 @@ import java.util.Optional;
 
 /**
  * Jsonview 模板
+ *
  * @author qiuzhenhao
- * @date 2017/5/6
  */
 @Getter
 public class JsonviewTemplate extends ObjectElement{
@@ -34,7 +34,7 @@ public class JsonviewTemplate extends ObjectElement{
 
     @Override
     public Processor<? extends Element, ? extends JsonNode> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression) {
-        return new TemplateProcessor(processContext, this, parentNode, Processor.childExpression(this, parentExpression), dataDefinition);
+        return new TemplateProcessor(processContext, this, parentNode, Processor.childExpression(this, parentExpression));
     }
 
     public Optional<Extend> getExtend() {

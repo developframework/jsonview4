@@ -17,13 +17,8 @@ import java.util.Optional;
  */
 public class TemplateProcessor extends ObjectProcessor{
 
-    public TemplateProcessor(ProcessContext processContext, JsonviewTemplate jsonviewTemplate, Expression parentExpression) {
+    public TemplateProcessor(ProcessContext processContext, JsonviewTemplate jsonviewTemplate, ObjectNode node, Expression parentExpression) {
         super(processContext, jsonviewTemplate, parentExpression);
-    }
-
-    public TemplateProcessor(ProcessContext processContext, JsonviewTemplate jsonviewTemplate, ObjectNode node, Expression parentExpression, DataDefinition dataDefinition) {
-        super(processContext, jsonviewTemplate, parentExpression);
-        jsonviewTemplate.setDataDefinition(dataDefinition);
         this.node = node;
     }
 

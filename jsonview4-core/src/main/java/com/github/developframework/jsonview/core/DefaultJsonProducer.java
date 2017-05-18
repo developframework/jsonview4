@@ -21,7 +21,6 @@ import java.util.Optional;
 /**
  * 默认的Json生成器
  * @author qiuzhenhao
- * @date 2017/5/8
  */
 class DefaultJsonProducer implements JsonProducer{
 
@@ -98,8 +97,7 @@ class DefaultJsonProducer implements JsonProducer{
 
     private ObjectNode constructRootObjectNodeTree(ProcessContext processContext, JsonviewTemplate jsonviewTemplate) {
         ObjectNode root = jsonviewConfiguration.getObjectMapper().createObjectNode();
-        TemplateProcessor templateProcessor = new TemplateProcessor(processContext, jsonviewTemplate, jsonviewTemplate.getDataDefinition().getExpression());
-        templateProcessor.setNode(root);
+        TemplateProcessor templateProcessor = new TemplateProcessor(processContext, jsonviewTemplate, root, jsonviewTemplate.getDataDefinition().getExpression());
         templateProcessor.process(null);
         return root;
     }
@@ -108,8 +106,7 @@ class DefaultJsonProducer implements JsonProducer{
         ArrayNode root = jsonviewConfiguration.getObjectMapper().createArrayNode();
         ArrayElement arrayElement = new ArrayElement(jsonviewConfiguration, jsonviewTemplate.getNamespace(), jsonviewTemplate.getTemplateId(), jsonviewTemplate.getDataDefinition(), null);
         arrayElement.setMapFunctionValue(jsonviewTemplate.getMapFunctionValue());
-        ArrayProcessor arrayProcessor = new ArrayTemplateProcessor(processContext, jsonviewTemplate, arrayElement);
-        arrayProcessor.setNode(root);
+        ArrayProcessor arrayProcessor = new ArrayTemplateProcessor(processContext, jsonviewTemplate, root, arrayElement);
         arrayProcessor.process(null);
         return root;
     }
