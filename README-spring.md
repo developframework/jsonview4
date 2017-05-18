@@ -71,9 +71,9 @@ public class HelloController {
   
   	@GetMapping("/hello")
   	public JsonviewResponse hello() {
-      	JsonviewResponse res = new EmptyJsonviewResponse("jsonview-demo", "hello-view");
-      	res.putData("sayHello", "Hello jsonview4-spring!");
-      	return res;
+        JsonviewResponse res = new EmptyJsonviewResponse("jsonview-demo", "hello-view");
+        res.putData("sayHello", "Hello jsonview4-spring!");
+        return res;
   	}
 }
 ```
@@ -99,7 +99,7 @@ public class HelloController {
   	@TemplateId("hello-view")
   	@GetMapping("/hello")
   	public DataModel hello() {
-      	return HashDataModel.singleton("sayHello", "Hello jsonview4-spring!");
+		return HashDataModel.singleton("sayHello", "Hello jsonview4-spring!");
   	}
 }
 ```
