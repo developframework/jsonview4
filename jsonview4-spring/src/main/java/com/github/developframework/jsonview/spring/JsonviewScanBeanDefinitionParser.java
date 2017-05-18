@@ -11,7 +11,6 @@ import org.w3c.dom.Element;
  * JsonviewScan的spring bean 解析器
  *
  * @author qiuzhenhao
- * @date 2017/5/11
  */
 public class JsonviewScanBeanDefinitionParser extends AbstractSingleBeanDefinitionParser {
 

@@ -8,7 +8,6 @@ import org.apache.commons.lang3.StringUtils;
  * 数据定义
  *
  * @author qiuzhenhao
- * @date 2017/5/6
  */
 @Getter
 public class DataDefinition {

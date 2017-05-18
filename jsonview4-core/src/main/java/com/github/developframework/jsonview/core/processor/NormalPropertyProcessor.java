@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 /**
  * 普通属性节点处理器
  * @author qiuzhenhao
- * @date 2017/5/8
  */
 public class NormalPropertyProcessor extends PropertyProcessor{
 

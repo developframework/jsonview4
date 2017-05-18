@@ -15,7 +15,6 @@ import java.util.Optional;
 /**
  * 布尔型属性节点
  * @author qiuzhenhao
- * @date 2017/5/8
  */
 public class BooleanPropertyElement extends PropertyElement{
 

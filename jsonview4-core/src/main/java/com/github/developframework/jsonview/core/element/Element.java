@@ -13,7 +13,6 @@ import java.util.Optional;
 /**
  * 节点顶级基类
  * @author qiuzhenhao
- * @date 2017/5/6
  */
 @Getter
 public abstract class Element {

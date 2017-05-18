@@ -12,7 +12,6 @@ import lombok.Setter;
 /**
  * 处理器顶级基类
  * @author qiuzhenhao
- * @date 2017/5/6
  * @param <ELEMENT> 描述处理哪种节点
  * @param <NODE> JsonNode
  */

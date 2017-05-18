@@ -8,7 +8,6 @@ import java.lang.annotation.Target;
 /**
  * 命名空间注解
  * @author qiuzhenhao
- * @date 2017/5/11
  */
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)

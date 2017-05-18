@@ -8,7 +8,6 @@ import org.springframework.core.MethodParameter;
  * 处理DataModel的ReturnValueHandler
  *
  * @author qiuzhenhao
- * @date 2017/5/11
  */
 public final class DataModelReturnValueHandler extends AnnotationJsonviewReturnValueHandler<DataModel> {
 

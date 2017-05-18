@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Jsonview 异常
  * @author qiuzhenhao
- * @date 2017/5/6
  */
 @Slf4j
 public class JsonviewException extends RuntimeException{

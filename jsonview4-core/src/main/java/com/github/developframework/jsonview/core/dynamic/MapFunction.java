@@ -3,7 +3,6 @@ package com.github.developframework.jsonview.core.dynamic;
 /**
  * 数组映射接口
  * @author qiuzhenhao
- * @date 2017/5/11
  */
 public interface MapFunction<T, R> {
 

@@ -9,7 +9,6 @@ import java.util.Objects;
 /**
  * unix时间戳型属性节点处理器
  * @author qiuzhenhao
- * @date 2017/5/8
  */
 public class UnixTimestampPropertyProcessor extends DatePropertyProcessor {
 

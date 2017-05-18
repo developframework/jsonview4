@@ -14,7 +14,6 @@ import org.apache.commons.lang3.StringUtils;
  * 内容节点基类
  *
  * @author qiuzhenhao
- * @date 2017/5/6
  */
 @Getter
 public abstract class ContentElement extends Element {

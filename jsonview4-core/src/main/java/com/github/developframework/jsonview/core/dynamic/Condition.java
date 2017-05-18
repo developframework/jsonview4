@@ -6,7 +6,6 @@ import com.github.developframework.jsonview.core.data.DataModel;
 /**
  * 条件
  * @author qiuzhenhao
- * @date 2017/5/9
  */
 @FunctionalInterface
 public interface Condition {

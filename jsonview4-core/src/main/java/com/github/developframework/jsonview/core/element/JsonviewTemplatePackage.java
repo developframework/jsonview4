@@ -9,7 +9,6 @@ import java.util.HashMap;
 /**
  * Jsonview 模板包
  * @author qiuzhenhao
- * @date 2017/5/6
  */
 public class JsonviewTemplatePackage extends HashMap<String, JsonviewTemplate>{
 

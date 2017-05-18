@@ -6,7 +6,6 @@ import com.github.developframework.jsonview.core.data.DataModel;
 /**
  * json生成器接口
  * @author qiuzhenhao
- * @date 2017/5/8
  */
 public interface JsonProducer {
 

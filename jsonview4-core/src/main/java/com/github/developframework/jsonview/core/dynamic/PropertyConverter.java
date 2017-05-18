@@ -3,7 +3,6 @@ package com.github.developframework.jsonview.core.dynamic;
 /**
  * 转化器
  * @author qiuzhenhao
- * @date 2017/5/8
  * @param <TARGET> 目标类型
  */
 @FunctionalInterface

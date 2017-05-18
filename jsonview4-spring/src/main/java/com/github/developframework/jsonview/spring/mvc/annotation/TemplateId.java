@@ -8,7 +8,6 @@ import java.lang.annotation.Target;
 /**
  * 模板ID注解
  * @author qiuzhenhao
- * @date 2017/5/11
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

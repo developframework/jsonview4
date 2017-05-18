@@ -5,7 +5,6 @@ import lombok.Getter;
 /**
  * 功能符号
  * @author qiuzhenhao
- * @date 2017/5/6
  */
 public enum FunctionSign {
 

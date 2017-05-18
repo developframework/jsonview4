@@ -1,9 +1,7 @@
 package com.github.developframework.jsonview.core.processor;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.developframework.expression.Expression;
-import com.github.developframework.jsonview.core.element.Element;
 import com.github.developframework.jsonview.core.element.PropertyElement;
 
 import java.util.HashSet;
@@ -12,7 +10,6 @@ import java.util.Set;
 /**
  * 布尔型属性节点处理器
  * @author qiuzhenhao
- * @date 2017/5/8
  */
 public class BooleanPropertyProcessor extends PropertyProcessor{
 

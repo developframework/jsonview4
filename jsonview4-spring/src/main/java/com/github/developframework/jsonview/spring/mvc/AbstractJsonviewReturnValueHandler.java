@@ -22,7 +22,6 @@ import java.nio.charset.Charset;
  * 抽象的springmvc ReturnValueHandler
  *
  * @author qiuzhenhao
- * @date 2017/5/11
  */
 public abstract class AbstractJsonviewReturnValueHandler<T> implements HandlerMethodReturnValueHandler {
 

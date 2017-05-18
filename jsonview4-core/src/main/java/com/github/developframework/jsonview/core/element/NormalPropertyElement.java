@@ -15,7 +15,6 @@ import java.util.Optional;
 /**
  * 普通的属性节点
  * @author qiuzhenhao
- * @date 2017/5/7
  */
 public class NormalPropertyElement extends PropertyElement{
 

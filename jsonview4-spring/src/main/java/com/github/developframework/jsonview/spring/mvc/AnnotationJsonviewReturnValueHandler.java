@@ -12,7 +12,6 @@ import org.springframework.core.annotation.AnnotationUtils;
 /**
  * 基于注解的ReturnValueHandler
  * @author qiuzhenhao
- * @date 2017/5/11
  */
 public abstract class AnnotationJsonviewReturnValueHandler<T> extends AbstractJsonviewReturnValueHandler <T>{
 

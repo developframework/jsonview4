@@ -9,7 +9,6 @@ import org.springframework.core.MethodParameter;
  * 处理JsonviewResponse的ReturnValueHandler
  *
  * @author qiuzhenhao
- * @date 2017/5/11
  */
 public final class JsonviewResponseReturnValueHandler extends AbstractJsonviewReturnValueHandler<JsonviewResponse> {
 

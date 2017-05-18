@@ -12,7 +12,6 @@ import java.util.Set;
 /**
  * JsonviewFactory 的 FactoryBean
  * @author qiuzhenhao
- * @date 2017/5/11
  */
 public class JsonviewFactoryFactoryBean implements FactoryBean<JsonviewFactory>  {
 

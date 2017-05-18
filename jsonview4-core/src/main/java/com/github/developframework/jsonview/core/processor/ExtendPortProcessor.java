@@ -8,7 +8,6 @@ import com.github.developframework.jsonview.core.element.ExtendPortElement;
 /**
  * 扩展端口处理器
  * @author qiuzhenhao
- * @date 2017/5/8
  */
 public class ExtendPortProcessor extends FunctionalProcessor<ExtendPortElement, JsonNode>{
 

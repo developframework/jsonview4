@@ -17,7 +17,6 @@ import java.util.Set;
 /**
  * 日期时间类型属性节点处理器
  * @author qiuzhenhao
- * @date 2017/5/8
  */
 public class DatePropertyProcessor extends PropertyProcessor{
 

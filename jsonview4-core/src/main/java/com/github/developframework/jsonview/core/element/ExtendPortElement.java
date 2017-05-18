@@ -14,7 +14,6 @@ import java.util.Optional;
 /**
  * 扩展端口节点
  * @author qiuzhenhao
- * @date 2017/5/8
  */
 public class ExtendPortElement extends FunctionalElement{
 

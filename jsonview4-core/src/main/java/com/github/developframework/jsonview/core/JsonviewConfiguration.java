@@ -14,7 +14,6 @@ import java.util.Map;
 /**
  * Jsonview配置
  * @author qiuzhenhao
- * @date 2017/5/6
  */
 public class JsonviewConfiguration {
 

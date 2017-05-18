@@ -10,7 +10,6 @@ import java.io.InputStream;
  * spring resource配置源
  *
  * @author qiuzhenhao
- * @date 2017/5/11
  */
 public class SpringResourceConfigurationSource implements ConfigurationSource {
 

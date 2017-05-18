@@ -7,7 +7,6 @@ import lombok.Getter;
  * Jsonview的响应对象
  *
  * @author qiuzhenhao
- * @date 2017/5/11
  */
 @Getter
 public class JsonviewResponse {
