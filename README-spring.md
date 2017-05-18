@@ -16,13 +16,13 @@
 
 ```xml
 <bean id="jsonviewFactory" class="com.github.developframework.jsonview.spring.JsonviewFactoryFactoryBean">
-	<property name="configs">
-		<set>
-			<value>/jsonview/jsonview-student.xml</value>
-			<value>/jsonview/jsonview-account.xml</value>
-			<value>/jsonview/jsonview-class.xml</value>
-		</set>
-	</property>
+    <property name="configs">
+        <set>
+            <value>/jsonview/jsonview-student.xml</value>
+            <value>/jsonview/jsonview-account.xml</value>
+            <value>/jsonview/jsonview-class.xml</value>
+        </set>
+    </property>
 </bean>
 ```
 
@@ -32,16 +32,15 @@
 
 ```xml
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:jsonview="https://github.com/developframework/jsonview4/schema"
-	xsi:schemaLocation="
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jsonview="https://github.com/developframework/jsonview4/schema"
+       xsi:schemaLocation="
 		http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
 		https://github.com/developframework/jsonview4/schema
-		https://github.com/developframework/jsonview4/schema/jsonview-spring.xsd">	
-	
-	<jsonview:scan id="jsonviewFactory" locations="classpath:jsonview/*.xml" />
-	
+		https://github.com/developframework/jsonview4/schema/jsonview-spring.xsd">
+
+    <jsonview:scan id="jsonviewFactory" locations="classpath:jsonview/*.xml" />
 </beans>
 ```
 
@@ -54,10 +53,10 @@
 
 ```xml
 <mvc:annotation-driven>
-  <mvc:return-value-handlers>  
-    <bean class="com.github.developframework.jsonview.spring.mvc.DataModelReturnValueHandler" />
-    <bean class="com.github.developframework.jsonview.spring.mvc.JsonviewResponseReturnValueHandler" />
-  </mvc:return-value-handlers>  
+    <mvc:return-value-handlers>
+        <bean class="com.github.developframework.jsonview.spring.mvc.DataModelReturnValueHandler" />
+        <bean class="com.github.developframework.jsonview.spring.mvc.JsonviewResponseReturnValueHandler" />
+    </mvc:return-value-handlers>
 </mvc:annotation-driven>
 ```
 
