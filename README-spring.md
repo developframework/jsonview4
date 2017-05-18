@@ -4,9 +4,9 @@
 
 ```xml
 <dependency>
-	<groupId>com.github.developframework</groupId>
-	<artifactId>jsonview4-spring</artifactId>
-	<version>4.0.0</version>
+    <groupId>com.github.developframework</groupId>
+    <artifactId>jsonview4-spring</artifactId>
+    <version>4.0.0</version>
 </dependency>
 ```
 
