@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.github.developframework.expression.ArrayExpression;
 import com.github.developframework.expression.Expression;
 import com.github.developframework.expression.ObjectExpression;
+import com.github.developframework.jsonview.core.element.ContentElement;
 import com.github.developframework.jsonview.core.element.Element;
 import com.github.developframework.jsonview.core.element.LinkElement;
 import com.github.developframework.jsonview.core.element.ObjectElement;
@@ -55,8 +56,8 @@ public class LinkProcessor extends ObjectProcessor {
         final ObjectInArrayProcessor objectInArrayProcessor = (ObjectInArrayProcessor) parentProcessor;
         final ArrayExpression arrayExpression = (ArrayExpression) objectInArrayProcessor.getExpression();
         ArrayExpression targetExpression = new ArrayExpression(((ObjectExpression) expression).getPropertyName(), arrayExpression.getIndex());
-        ObjectElement objectElement = ((LinkElement) element).createLinkInsideObjectElement();
-        Processor<? extends Element, ? extends JsonNode> nextProcessor = objectElement.createProcessor(processContext, objectInArrayProcessor.node, targetExpression);
+        ContentElement contentElement = ((LinkElement) element).createProxyContentElement();
+        Processor<? extends Element, ? extends JsonNode> nextProcessor = contentElement.createProcessor(processContext, objectInArrayProcessor.node, targetExpression);
         nextProcessor.process(parentProcessor);
     }
 }
