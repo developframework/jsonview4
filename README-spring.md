@@ -68,13 +68,13 @@ Controller方法以`JsonviewResponse`对象返回将会被交由` JsonviewRespon
 ```java
 @Controller
 public class HelloController {
-  
-  	@GetMapping("/hello")
-  	public JsonviewResponse hello() {
+    
+    @GetMapping("/hello")
+    public JsonviewResponse hello() {
         JsonviewResponse res = new EmptyJsonviewResponse("jsonview-demo", "hello-view");
         res.putData("sayHello", "Hello jsonview4-spring!");
         return res;
-  	}
+    }
 }
 ```
 
@@ -94,13 +94,13 @@ Controller方法以`DataModel`对象返回将会被交由` DataModelReturnValueH
 ```java
 @Controller
 public class HelloController {
-  
-  	@JsonviewNamespace("jsonview-demo")
-  	@TemplateId("hello-view")
-  	@GetMapping("/hello")
-  	public DataModel hello() {
-		return HashDataModel.singleton("sayHello", "Hello jsonview4-spring!");
-  	}
+
+    @JsonviewNamespace("jsonview-demo")
+    @TemplateId("hello-view")
+    @GetMapping("/hello")
+    public DataModel hello() {
+        return HashDataModel.singleton("sayHello", "Hello jsonview4-spring!");
+    }
 }
 ```
 
