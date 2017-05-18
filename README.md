@@ -166,15 +166,17 @@ JsonviewTemplatePackage jsonviewTemplatePackage = jsonviewConfiguration.getTempl
 
 Jsonview框架的所有异常类。
 
-| 异常                                | 说明                       |
-| --------------------------------- | ------------------------ |
-| JsonviewException                 | jsonview顶级异常             |
-| ConfigurationSourceException      | 配置源异常                    |
-| TemplateUndefinedException        | template未定义异常            |
-| TemplatePackageUndefinedException | templatePackage未定义异常     |
-| JsonviewParseXmlException         | 配置文件解析错误异常               |
-| OneToOneSizeNotEqualException     | 使用one-to-one功能时数组大小不相等异常 |
-| ResourceNotUniqueException        | 资源定义不唯一异常                |
+| 异常                                | 说明                   |
+| --------------------------------- | -------------------- |
+| JsonviewException                 | jsonview顶级异常         |
+| ConfigurationSourceException      | 配置源异常                |
+| TemplateUndefinedException        | template未定义异常        |
+| TemplatePackageUndefinedException | templatePackage未定义异常 |
+| JsonviewParseXmlException         | 配置文件解析错误异常           |
+| LinkSizeNotEqualException         | 使用link功能时数组大小不相等异常   |
+| ResourceNotUniqueException        | 资源定义不唯一异常            |
+| InvalidArgumentsException         | 无效的参数异常              |
+| DataUndefinedException            | data没有定义在DataModel异常 |
 
 ### **3.2. XML概览**
 
@@ -215,8 +217,7 @@ Jsonview configuration文档不是唯一的，Jsonview框架允许你拥有多�
 功能型标签
 
 - `<include>`
-- `<object-one-to-one>`
-- `<property-one-to-one>`
+- `<link>`
 - `<relevance>`
 - `<object-virtual>`
 - `<property-ignore>`
@@ -312,35 +313,20 @@ Jsonview框架提供模块化设计json结构视图的功能。在一个`<templa
 | id        | 需要导入的jsonview id          | 是    |
 | namespace | jsonview的命名空间，不填默认为当前命名空间 | 否    |
 
-###### b) object-one-to-one
+###### b) link
 
 该标签用于实现一对一链接对象功能。详见[5.4.1.节](#chapter541)。
 
 ```xml
-<object-one-to-one data="" alias="" for-class="" null-hidden="true"></object-one-to-one>
+<link data="" alias="" for-class="" null-hidden="true"></link>
 ```
 
-| 属性          | 功能                                | 是否必须 |
-| ----------- | --------------------------------- | ---- |
-| data        | 取值表达式                             | 是    |
-| alias       | 别名，你可以重新定义显示名                     | 否    |
-| for-class   | 声明data表达式指向的对象类型                  | 否    |
-| null-hidden | true时表示表达式取的值为null时隐藏该节点，默认为false | 否    |
-
-###### b) property-one-to-one
-
-该标签用于实现一对一链接功能。详见[5.4.1.节](#chapter541)。
-
-```xml
-<property-one-to-one data="" alias="" converter="" null-hidden="true" />
-```
-
-| 属性          | 功能                                | 是否必须 |
-| ----------- | --------------------------------- | ---- |
-| data        | 取值表达式                             | 是    |
-| alias       | 别名，你可以重新定义显示名                     | 否    |
-| converter   | 类型转换器全限定类名或expression表达式          | 否    |
-| null-hidden | true时表示表达式取的值为null时隐藏该节点，默认为false | 否    |
+| 属性          | 功能                                  | 是否必须 |
+| ----------- | ----------------------------------- | ---- |
+| data        | 取值表达式，**data必须指代一个List或array类型的对象** | 是    |
+| alias       | 别名，你可以重新定义显示名                       | 否    |
+| for-class   | 声明data表达式指向的对象类型                    | 否    |
+| null-hidden | true时表示表达式取的值为null时隐藏该节点，默认为false   | 否    |
 
 ###### c) relevance
 该标签用于实现一对多关联功能。详见[5.4.2.节](#chapter542)。
@@ -351,7 +337,7 @@ Jsonview框架提供模块化设计json结构视图的功能。在一个`<templa
 
 | 属性           | 功能                                       | 是否必须 |
 | ------------ | ---------------------------------------- | ---- |
-| data         | 取值表达式                                    | 是    |
+| data         | 取值表达式，**data必须指代一个List或array类型的对象**      | 是    |
 | alias        | 别名，你可以重新定义显示名                            | 否    |
 | rel-function | 关联判定器全限定类名或expression表达式                 | 是    |
 | null-hidden  | true时表示表达式取的值为null时隐藏该节点，默认为false        | 否    |
@@ -503,6 +489,7 @@ public class SchoolClass {
 <!-- 忽略jsonview-configuration -->
 <template-package namespace="jsonview-student">
   <template id="student-detail" data="student">
+    <property data="id"/>
     <property data="name"/>
     <property data="classId"/>
     <property data="birthday"/>
@@ -515,7 +502,7 @@ public class SchoolClass {
 JsonviewFactory factory = new JsonviewFactory("/jsonview/jsonview-student.xml");
 JsonProducer jsonProducer = factory.getJsonProducer();
 DataModel dataModel = new HashDataModel();
-Student peter = new Student("Peter", 1, "1995-01-01");
+Student peter = new Student(1, "Peter", 1, "1995-01-01");
 dataModel.putData("student", peter);
 String json = jsonProducer.createJson(dataModel, "jsonview-student", "student-detail");
 System.out.println(json);
@@ -524,7 +511,7 @@ System.out.println(json);
 执行结果：
 
 ```json
-{"name":"Peter","classId":1,"birthday":"Sun Jan 01 00:00:00 CST 1995"}
+{"id":1,"name":"Peter","classId":1,"birthday":"Sun Jan 01 00:00:00 CST 1995"}
 ```
 
 ### 4.2. 使用alias修改显示名称
@@ -534,6 +521,7 @@ System.out.println(json);
 <!-- 忽略jsonview-configuration -->
 <template-package namespace="jsonview-student">
   <template id="student-detail" data="student">
+    <property data="id" alias="student_id"/>
     <property data="name" alias="student_name"/>
     <property data="classId" alias="student_classId"/>
     <property data="birthday" alias="student_birthday"/>
@@ -542,7 +530,7 @@ System.out.println(json);
 ```
 
 ```json
-{"student_name":"Peter","student_classId":1,"student_birthday":"Sun Jan 01 00:00:00 CST 1995"}
+{"student_id":1,"student_name":"Peter","student_classId":1,"student_birthday":"Sun Jan 01 00:00:00 CST 1995"}
 ```
 
 ### **4.3. property扩展**
@@ -565,7 +553,7 @@ System.out.println(json);
 运行结果：
 
 ```json
-{"name":"Peter","classId":1,"birthday":"1995-01-01"}
+{"id":1,"name":"Peter","classId":1,"birthday":"1995-01-01"}
 ```
 
 #### <a name="chapter432">**4.3.2 使用property-unixtimestamp输出时间戳**</a>
@@ -611,13 +599,13 @@ dataModel.putData("number2", 0);
 student实例传入null的birthday值
 
 ```java
-Student student = new Student("Peter", 1, null);
+Student student = new Student(1, "Peter", 1, null);
 ```
 
 运行结果：
 
 ```json
-{"name":"Peter","classId":1}
+{"id":1,"name":"Peter","classId":1}
 ```
 
 ### <a name="chapter45">**4.5. 使用for-class输出模型对象Json**</a>
@@ -638,7 +626,7 @@ Student student = new Student("Peter", 1, null);
 运行结果：
 
 ```json
-{"name":"Peter","classId":1}
+{"id":1,"name":"Peter","classId":1}
 ```
 
 ### <a name="chapter46">**4.6. 简单输出数组模型Json**</a>
@@ -656,8 +644,8 @@ Student student = new Student("Peter", 1, null);
 ```
 
 ```java
-Student peter = new Student("Peter", 1, "1995-01-01");
-Student john = new Student("John", 1, "1996-5-20");
+Student peter = new Student(1, "Peter", 1, "1995-01-01");
+Student john = new Student(2, "John", 1, "1996-5-20");
 Student[] students = {peter, john};
 dataModel.putData("students", students);
 // isPretty参数设为true，开启json美化
@@ -667,10 +655,12 @@ String json = jsonProducer.createJson(dataModel, "jsonview-student", "student-li
 ```json
 {
   "students" : [ {
+    "id" : 1,
     "name" : "Peter",
     "classId" : 1,
     "birthday" : "1995-01-01"
   }, {
+    "id" : 2,
     "name" : "John",
     "classId" : 1,
     "birthday" : "1996-05-20"
@@ -682,6 +672,7 @@ String json = jsonProducer.createJson(dataModel, "jsonview-student", "student-li
 
 ```xml
 <template id="student-list" data="students">
+  <property data="id"/>
   <property data="name"/>
   <property data="classId"/>
   <property-date data="birthday" pattern="yyyy-MM-dd"/>
@@ -690,10 +681,12 @@ String json = jsonProducer.createJson(dataModel, "jsonview-student", "student-li
 
 ```json
 [ {
+  "id" : 1,
   "name" : "Peter",
   "classId" : 1,
   "birthday" : "1995-01-01"
 }, {
+  "id" : 2,
   "name" : "John",
   "classId" : 1,
   "birthday" : "1996-05-20"
@@ -728,6 +721,7 @@ public interface PropertyConverter<TARGET> {
 
 ```xml
 <template id="student-detail" data="student">
+  <property data="id" />
   <property data="name" converter="nameConverter"/>
   <property data="classId"/>
   <property-date data="birthday" pattern="yyyy-MM-dd"/>
@@ -742,6 +736,7 @@ dataModel.putData("nameConverter", (PropertyConverter<String>) source -> "My nam
 
 ```json
 {
+  "id" : 1,
   "name" : "My name is Peter",
   "classId" : 1,
   "birthday" : "1995-01-01"
@@ -786,6 +781,7 @@ The child element invalid, because you use "map-function" attribute.
 ```xml
 <template id="student-detail">
   <object-virtual alias="student">
+    <property data="id"/>
     <property data="name"/>
     <property data="classId"/>
     <property-date data="birthday" pattern="yyyy-MM-dd"/>
@@ -794,6 +790,7 @@ The child element invalid, because you use "map-function" attribute.
 ```
 
 ```java
+dataModel.putData("id", 1);
 dataModel.putData("name", "Peter");
 dataModel.putData("classId", 1);
 dataModel.putData("birthday", "1995-01-01");
@@ -802,6 +799,7 @@ dataModel.putData("birthday", "1995-01-01");
 ```json
 {
   "student" : {
+    "id" : 1,
     "name" : "Peter",
     "classId" : 1,
     "birthday" : "1995-01-01"
@@ -822,6 +820,7 @@ dataModel.putData("birthday", "1995-01-01");
   </template>
 
   <template id="student-detail">
+    <property data="id"/>
     <property data="name"/>
     <property data="classId"/>
     <property-date data="birthday" pattern="yyyy-MM-dd"/>
@@ -850,6 +849,7 @@ Jsonview框架的继承的概念，在`<template>`标签可以添加属性`exten
   <template id="student-detail" extend="student-parent:my-port">
     <!-- 本模板内容将会插入到父视图模板的my-port端口位置上 -->
     <object data="student">
+      <property data="id"/>
       <property data="name"/>
       <property data="classId"/>
       <property-date data="birthday" pattern="yyyy-MM-dd"/>
@@ -859,7 +859,7 @@ Jsonview框架的继承的概念，在`<template>`标签可以添加属性`exten
 ```
 
 ```java
-Student peter = new Student("Peter", 1, "1995-01-01");
+Student peter = new Student(1, "Peter", 1, "1995-01-01");
 dataModel.putData("student", peter);
 dataModel.putData("otherData", "I'm other data.");
 // 这里调用的子视图模板
@@ -872,6 +872,7 @@ String json = jsonProducer.createJson(dataModel, "jsonview-student", "student-de
     "otherData" : "I'm other data."
   },
   "student" : {
+    "id" : 1,
     "name" : "Peter",
     "classId" : 1,
     "birthday" : "1995-01-01"
@@ -885,7 +886,7 @@ String json = jsonProducer.createJson(dataModel, "jsonview-student", "student-de
 
 #### <a name="chapter541">**5.4.1. 一对一数组链接**</a>
 
-使用`<object-one-to-one>` 和`<property-one-to-one>` 标签可以在数组间一对一链接对象。**该标签仅能在`<array>`下使用。**当`<object-one-to-one>` 和`<property-one-to-one>` 的data属性所指的数组和父`<array>`数组个数不相同时将会抛出`OneToOneSizeNotEqualException`。
+使用`<link>` 标签可以在数组间一对一链接对象。**该标签仅能在`<array>`下使用。**当`<link>` 的data属性所指的数组和父`<array>`数组个数不相同时将会抛出`LinkSizeNotEqualException`。
 例子：
 假如每个学生实例都有一个账户实例，并且又都一对一对应了一个成绩值。
 
@@ -893,16 +894,17 @@ String json = jsonProducer.createJson(dataModel, "jsonview-student", "student-de
 <template-package namespace="jsonview-student">
 
   <template id="student-list" data="students">
+    <property data="id"/>
     <property data="name"/>
     <property data="classId"/>
     <property-date data="birthday" pattern="yyyy-MM-dd"/>
     <!-- 一对一对应accounts数组每项 -->
-    <object-one-to-one data="#accounts" alias="account">
+    <link data="#accounts" alias="account">
       <!-- 引用另一个命名空间的模板 -->
       <include id="account-detail" namespace="jsonview-account"/>
-    </object-one-to-one>
+    </link>
     <!-- 一对一对应scores数组每项 -->
-    <property-one-to-one data="#scores" alias="score" />
+    <link data="#scores" alias="score"/>
   </template>
 </template-package>
 
@@ -930,6 +932,7 @@ dataModel.putData("scores", scores);
 
 ```json
 [ {
+  "id" : 1,
   "name" : "Peter",
   "classId" : 1,
   "birthday" : "1995-01-01",
@@ -939,6 +942,7 @@ dataModel.putData("scores", scores);
   },
   "score" : 95
 }, {
+  "id" : 2,
   "name" : "John",
   "classId" : 1,
   "birthday" : "1996-05-20",
