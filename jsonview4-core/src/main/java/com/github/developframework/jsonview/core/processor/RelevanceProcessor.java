@@ -21,11 +21,25 @@ import java.util.stream.Collectors;
  *
  * @author qiuzhenhao
  */
-public class RelevanceProcessor extends FunctionalProcessor<RelevanceElement, ObjectNode> {
+public class RelevanceProcessor extends ArrayProcessor {
 
 
-    public RelevanceProcessor(ProcessContext processContext, RelevanceElement element, ObjectNode node, Expression parentExpression) {
-        super(processContext, element, node, parentExpression);
+    public RelevanceProcessor(ProcessContext processContext, RelevanceElement element, Expression parentExpression) {
+        super(processContext, element, parentExpression);
+    }
+
+    @Override
+    protected boolean prepare(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
+        Optional<Object> valueOptional = processContext.getDataModel().getData(element.getDataDefinition().getExpression());
+        if(valueOptional.isPresent()) {
+            this.value = valueOptional.get();
+            this.node = ((ObjectNode) parentProcessor.getNode()).putArray(element.showName());
+            return true;
+        }
+        if(!element.isNullHidden()) {
+            ((ObjectNode) parentProcessor.getNode()).putNull(element.showName());
+        }
+        return false;
     }
 
     @Override
@@ -34,7 +48,7 @@ public class RelevanceProcessor extends FunctionalProcessor<RelevanceElement, Ob
         final ArrayExpression arrayExpression = (ArrayExpression) objectInArrayProcessor.getExpression();
         Optional<Object> itemOptional = processContext.getDataModel().getData(arrayExpression);
         if (itemOptional.isPresent()) {
-            RelFunction relFunction = getRelFunctionInstance(element.getRelFunctionValue());
+            RelFunction relFunction = getRelFunctionInstance(((RelevanceElement) element).getRelFunctionValue());
             Object[] targets = getTargets();
             List<Integer> indexList = new LinkedList<>();
             for (int i = 0; i < targets.length; i++) {
@@ -42,11 +56,12 @@ public class RelevanceProcessor extends FunctionalProcessor<RelevanceElement, Ob
                     indexList.add(i);
                 }
             }
-            final ObjectExpression targetExpression = (ObjectExpression) element.getArrayElement().getDataDefinition().getExpression();
+            final ObjectExpression targetExpression = (ObjectExpression) element.getDataDefinition().getExpression();
             // 每个索引转化成ArrayExpression
             List<ArrayExpression> arrayExpressions = indexList.stream().map(index -> new ArrayExpression(targetExpression.getPropertyName(), index)).collect(Collectors.toList());
-            ArrayProcessor nextArrayProcessor = (ArrayProcessor) element.getArrayElement().createProcessor(processContext, (ObjectNode) parentProcessor.getNode(), expression);
-            nextArrayProcessor.process(parentProcessor, arrayExpressions);
+            for (ArrayExpression childArrayExpression : arrayExpressions) {
+                super.single(childArrayExpression, arrayExpressions.size());
+            }
         }
     }
 
@@ -69,12 +84,11 @@ public class RelevanceProcessor extends FunctionalProcessor<RelevanceElement, Ob
     }
 
     private Object[] getTargets() {
-        final Object targetObj = processContext.getDataModel().getDataRequired(element.getArrayElement().getDataDefinition().getExpression());
-        Class<?> targetClass = targetObj.getClass();
+        Class<?> targetClass = this.value.getClass();
         if(targetClass.isArray()) {
-            return (Object[]) targetObj;
+            return (Object[]) this.value;
         } else if(List.class.isAssignableFrom(targetClass)) {
-            List list = (List) targetObj;
+            List list = (List) this.value;
             Object[] array = new Object[list.size()];
             return list.toArray(array);
         } else {

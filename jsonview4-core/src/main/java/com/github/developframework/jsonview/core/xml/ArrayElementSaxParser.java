@@ -9,7 +9,6 @@ import org.xml.sax.Attributes;
 /**
  * 数组节点解析器
  * @author qiuzhenhao
- * @date 2017/5/8
  */
 class ArrayElementSaxParser extends ContainerElementSaxParser<ArrayElement> {
 
@@ -29,8 +28,7 @@ class ArrayElementSaxParser extends ContainerElementSaxParser<ArrayElement> {
 
     @Override
     protected void addOtherAttributes(ArrayElement element, Attributes attributes) {
-        element.setNullHidden(attributes.getValue("null-hidden"));
+        super.addOtherAttributes(element, attributes);
         element.setMapFunctionValue(attributes.getValue("map-function"));
-        handleForClass(element, attributes);
     }
 }

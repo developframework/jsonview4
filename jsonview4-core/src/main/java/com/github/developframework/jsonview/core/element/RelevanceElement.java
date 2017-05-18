@@ -16,31 +16,18 @@ import lombok.Setter;
  *
  * @author qiuzhenhao
  */
-public class RelevanceElement extends ContainerFunctionalElement {
+public class RelevanceElement extends ArrayElement {
 
     @Getter
     @Setter
     private String relFunctionValue;
-    @Getter
-    private ArrayElement arrayElement;
 
-    public RelevanceElement(JsonviewConfiguration configuration, String namespace, String templateId, DataDefinition dataDefinition, String alias, String relFunctionValue) {
-        super(configuration, namespace, templateId);
-        arrayElement = new ArrayElement(configuration, namespace, templateId, dataDefinition, alias);
-        this.relFunctionValue = relFunctionValue;
+    public RelevanceElement(JsonviewConfiguration configuration, String namespace, String templateId, DataDefinition dataDefinition, String alias) {
+        super(configuration, namespace, templateId, dataDefinition, alias);
     }
 
     @Override
     public Processor<? extends Element, ? extends JsonNode> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression) {
-        return new RelevanceProcessor(processContext, this, parentNode, parentExpression);
-    }
-
-    @Override
-    public void addChildElement(Element element) {
-        arrayElement.addChildElement(element);
-    }
-
-    public void setMapFunctionValue(String mapFunctionValue) {
-        arrayElement.setMapFunctionValue(mapFunctionValue);
+        return new RelevanceProcessor(processContext, this, parentExpression);
     }
 }

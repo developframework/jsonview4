@@ -25,10 +25,4 @@ class ObjectElementSaxParser extends ContainerElementSaxParser<ObjectElement>{
     protected ObjectElement createElementInstance(ParseContext parseContext, DataDefinition dataDefinition, String alias) {
         return new ObjectElement(jsonviewConfiguration, parseContext.getCurrentTemplate().getNamespace(), parseContext.getCurrentTemplate().getTemplateId(), dataDefinition, alias);
     }
-
-    @Override
-    protected void addOtherAttributes(ObjectElement element, Attributes attributes) {
-        element.setNullHidden(attributes.getValue("null-hidden"));
-        handleForClass(element, attributes);
-    }
 }

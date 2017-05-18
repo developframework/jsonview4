@@ -24,8 +24,8 @@ public class ObjectProcessor extends ContainerProcessor<ObjectElement, ObjectNod
     protected boolean prepare(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
         Optional<Object> valueOptional = processContext.getDataModel().getData(expression);
         if (valueOptional.isPresent()) {
-            this.node = ((ObjectNode) parentProcessor.getNode()).putObject(element.showName());
             this.value = valueOptional.get();
+            this.node = ((ObjectNode) parentProcessor.getNode()).putObject(element.showName());
             return true;
         }
         if (!element.isNullHidden()) {

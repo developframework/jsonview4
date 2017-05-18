@@ -1,10 +1,13 @@
 package com.github.developframework.jsonview.core.processor;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.developframework.expression.Expression;
 import com.github.developframework.jsonview.core.element.Element;
 import com.github.developframework.jsonview.core.element.ObjectElement;
 import lombok.Getter;
+
+import java.util.Optional;
 
 /**
  * 数组元素处理器
@@ -23,7 +26,12 @@ public class ObjectInArrayProcessor extends ObjectProcessor {
 
     @Override
     protected boolean prepare(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
-        // 始终为true
-        return true;
+        Optional<Object> valueOptional = processContext.getDataModel().getData(expression);
+        if (valueOptional.isPresent()) {
+            this.value = valueOptional.get();
+            this.node = processContext.getJsonviewConfiguration().getObjectMapper().createObjectNode();
+            return true;
+        }
+        return false;
     }
 }

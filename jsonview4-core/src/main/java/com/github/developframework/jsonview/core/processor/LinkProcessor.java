@@ -27,9 +27,7 @@ public class LinkProcessor extends ObjectProcessor {
     @Override
     protected boolean prepare(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
         final ObjectInArrayProcessor objectInArrayProcessor = (ObjectInArrayProcessor) parentProcessor;
-        ObjectExpression targetObjectExpression = (ObjectExpression) expression;
-
-        Optional<Object> valueOptional = processContext.getDataModel().getData(targetObjectExpression);
+        Optional<Object> valueOptional = processContext.getDataModel().getData(expression);
         if (valueOptional.isPresent()) {
             this.value = valueOptional.get();
             int size;
@@ -45,10 +43,11 @@ public class LinkProcessor extends ObjectProcessor {
                 throw new LinkSizeNotEqualException(element.getNamespace(), element.getTemplateId());
             }
             return true;
-        } else {
-
-            return false;
         }
+        if (!element.isNullHidden()) {
+            node.putNull(element.showName());
+        }
+        return false;
     }
 
     @Override

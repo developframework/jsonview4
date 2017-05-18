@@ -17,50 +17,51 @@ import java.util.Optional;
  *
  * @author qiuzhenhao
  */
-public abstract class PropertyProcessor extends ContentProcessor<PropertyElement, JsonNode> {
+public abstract class PropertyProcessor extends ContentProcessor<PropertyElement, ObjectNode> {
 
     public PropertyProcessor(ProcessContext processContext, PropertyElement element, Expression parentExpression) {
         super(processContext, element, parentExpression);
     }
 
     @Override
-    protected void handleCoreLogic(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
-        DataModel dataModel = processContext.getDataModel();
-        Optional<Object> valueOptional = dataModel.getData(expression);
-        ObjectNode parentNode = (ObjectNode) parentProcessor.getNode();
-        final String showName = super.element.showName();
-        if (!valueOptional.isPresent()) {
-            // 处理null-hidden
-            if (!element.isNullHidden()) {
-                parentNode.putNull(showName);
-            }
-            return;
+    protected boolean prepare(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
+        Optional<Object> valueOptional = processContext.getDataModel().getData(expression);
+        if (valueOptional.isPresent()) {
+            this.value = valueOptional.get();
+            this.node = (ObjectNode) parentProcessor.getNode();
+            return true;
         }
-        valueOptional.ifPresent(value -> {
-            // 处理converter
-            Optional<Object> optional = element.getConverterValue().map(converterValue -> {
-                Optional<Object> converterOptional = dataModel.getData(converterValue);
-                Object obj = converterOptional.orElseGet(() -> {
-                    try {
-                        return Class.forName(converterValue).newInstance();
-                    } catch (ClassNotFoundException e) {
-                        throw new InvalidArgumentsException("converter", converterValue, "Class not found, and it's also not a expression.");
-                    } catch (IllegalAccessException | InstantiationException e) {
-                        throw new JsonviewException("Can't new converter instance.");
-                    }
-                });
-                if (obj instanceof PropertyConverter) {
-                    return ((PropertyConverter) obj).convert(value);
-                } else {
-                    throw new InvalidArgumentsException("converter", converterValue, "It's not a PropertyConverter instance.");
+        if (!element.isNullHidden()) {
+            ((ObjectNode) parentProcessor.getNode()).putNull(element.showName());
+        }
+        return false;
+    }
+
+    @Override
+    protected void handleCoreLogic(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
+        // 经过converter转化后的值
+        Optional<Object> convertValueOptional = element.getConverterValue().map(converterValue -> {
+            Optional<Object> converterOptional = processContext.getDataModel().getData(converterValue);
+            Object obj = converterOptional.orElseGet(() -> {
+                try {
+                    return Class.forName(converterValue).newInstance();
+                } catch (ClassNotFoundException e) {
+                    throw new InvalidArgumentsException("converter", converterValue, "Class not found, and it's also not a expression.");
+                } catch (IllegalAccessException | InstantiationException e) {
+                    throw new JsonviewException("Can't new converter instance.");
                 }
             });
-            final Object newValue = optional.orElse(value);
-            Class<?> valueClass = newValue.getClass();
-            if (support(valueClass)) {
-                handle(parentNode, valueClass, newValue, showName);
+            if (obj instanceof PropertyConverter) {
+                return ((PropertyConverter) obj).convert(value);
+            } else {
+                throw new InvalidArgumentsException("converter", converterValue, "It's not a PropertyConverter instance.");
             }
         });
+        final Object convertValue = convertValueOptional.orElse(value);
+        Class<?> convertValueClass = convertValue.getClass();
+        if (support(convertValueClass)) {
+            handle(this.node, convertValueClass, convertValue, element.showName());
+        }
     }
 
     /**

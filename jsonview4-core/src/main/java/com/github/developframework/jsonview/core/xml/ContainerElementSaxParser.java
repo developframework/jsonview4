@@ -18,18 +18,15 @@ abstract class ContainerElementSaxParser<T extends ContainerElement> extends Con
         super(jsonviewConfiguration);
     }
 
-    /**
-     * 处理for-class
-     * @param element 节点
-     * @param attributes 属性
-     */
-    protected final void handleForClass(ContainerElement element, Attributes attributes) {
-        element.setForClass(attributes.getValue("for-class"));
-    }
-
     @Override
     public void handleAtEndElement(ParseContext parseContext) {
         ((ContainerElement) parseContext.getStack().pop()).loadForClassAllProperty();
+    }
+
+    @Override
+    protected void addOtherAttributes(T element, Attributes attributes) {
+        element.setNullHidden(attributes.getValue("null-hidden"));
+        element.setForClass(attributes.getValue("for-class"));
     }
 
     @Override

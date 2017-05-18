@@ -20,6 +20,7 @@ public class VirtualObjectProcessor extends ObjectProcessor {
     @Override
     protected boolean prepare(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
         this.node = ((ObjectNode) parentProcessor.getNode()).putObject(element.showName());
+        // 始终为true
         return true;
     }
 }

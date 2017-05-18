@@ -41,7 +41,7 @@ class TemplateElementSaxParser extends ContainerElementSaxParser<JsonviewTemplat
         if (StringUtils.isNotBlank(mapFunctionValue)) {
             jsonviewTemplate.setMapFunctionValue(mapFunctionValue);
         }
-        handleForClass(jsonviewTemplate, attributes);
+        jsonviewTemplate.setForClass(attributes.getValue("for-class"));
         parseContext.setCurrentTemplate(jsonviewTemplate);
         parseContext.getStack().push(jsonviewTemplate);
     }

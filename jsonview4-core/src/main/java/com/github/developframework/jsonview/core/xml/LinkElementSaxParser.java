@@ -28,10 +28,4 @@ public class LinkElementSaxParser extends ContainerElementSaxParser<LinkElement>
     protected LinkElement createElementInstance(ParseContext parseContext, DataDefinition dataDefinition, String alias) {
         return new LinkElement(jsonviewConfiguration, parseContext.getCurrentTemplate().getNamespace(), parseContext.getCurrentTemplate().getTemplateId(), dataDefinition, alias);
     }
-
-    @Override
-    protected void addOtherAttributes(LinkElement element, Attributes attributes) {
-        element.setNullHidden(attributes.getValue("null-hidden"));
-        handleForClass(element, attributes);
-    }
 }

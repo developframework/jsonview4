@@ -42,8 +42,9 @@ public class ArrayProcessor extends ContainerProcessor<ArrayElement, ArrayNode> 
 
     @Override
     protected boolean prepare(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
-        Optional<Object> optional = processContext.getDataModel().getData(expression);
-        if (optional.isPresent()) {
+        Optional<Object> valueOptional = processContext.getDataModel().getData(expression);
+        if (valueOptional.isPresent()) {
+            this.value = valueOptional.get();
             this.node = ((ObjectNode) parentProcessor.getNode()).putArray(element.showName());
             return true;
         }
@@ -55,40 +56,26 @@ public class ArrayProcessor extends ContainerProcessor<ArrayElement, ArrayNode> 
 
     @Override
     protected void handleCoreLogic(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
-        final Optional<Object> valueOptional = processContext.getDataModel().getData(expression);
-        if (valueOptional.isPresent()) {
-            this.value = valueOptional.get();
-            int size;
-            if (value.getClass().isArray()) {
-                size = ((Object[]) value).length;
-            } else if (value instanceof Collection<?>) {
-                size = ((Collection<?>) value).size();
-            } else {
-                throw new InvalidArgumentsException("data", expression.toString(), "Data must be array or List type.");
-            }
-            for (int i = 0; i < size; i++) {
-                single(ArrayExpression.fromObject((ObjectExpression) expression, i), size);
-            }
+        int size;
+        if (value.getClass().isArray()) {
+            size = ((Object[]) value).length;
+        } else if (value instanceof Collection<?>) {
+            size = ((Collection<?>) value).size();
+        } else {
+            throw new InvalidArgumentsException("data", expression.toString(), "Data must be array or List type.");
+        }
+        for (int i = 0; i < size; i++) {
+            single(ArrayExpression.fromObject((ObjectExpression) expression, i), size);
         }
     }
 
-    public void process(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor, List<ArrayExpression> expressions) {
-        if(prepare(parentProcessor)) {
-            for (ArrayExpression arrayExpression : expressions) {
-                single(arrayExpression, expressions.size());
-            }
-        }
-    }
-
-    private void single(ArrayExpression arrayExpression, int size) {
+    protected void single(ArrayExpression arrayExpression, int size) {
         if (element.isChildElementEmpty() || mapFunctionOptional.isPresent()) {
             empty(arrayExpression.getIndex());
         } else {
             final ObjectInArrayProcessor childProcessor = new ObjectInArrayProcessor(processContext, element.getItemObjectElement(), arrayExpression, size);
-            final ObjectNode objectNode = processContext.getJsonviewConfiguration().getObjectMapper().createObjectNode();
-            childProcessor.setNode(objectNode);
-            childProcessor.process(null);
-            node.add(objectNode);
+            childProcessor.process(this);
+            node.add(childProcessor.getNode());
         }
     }
 
@@ -145,7 +132,7 @@ public class ArrayProcessor extends ContainerProcessor<ArrayElement, ArrayNode> 
             if (obj instanceof MapFunction) {
                 return Optional.of(((MapFunction) obj));
             } else {
-                throw new InvalidArgumentsException("map-function", mapFunctionValue,"It's not a MapFunction instance.");
+                throw new InvalidArgumentsException("map-function", mapFunctionValue, "It's not a MapFunction instance.");
             }
         }
         return Optional.empty();

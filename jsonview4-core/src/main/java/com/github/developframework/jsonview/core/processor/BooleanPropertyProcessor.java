@@ -35,11 +35,6 @@ public class BooleanPropertyProcessor extends PropertyProcessor{
     }
 
     @Override
-    protected boolean prepare(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
-        return true;
-    }
-
-    @Override
     protected boolean support(Class<?> sourceClass) {
         return ACCEPT_CLASS_SET.contains(sourceClass);
     }

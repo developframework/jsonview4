@@ -1,9 +1,7 @@
 package com.github.developframework.jsonview.core.processor;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.developframework.expression.Expression;
-import com.github.developframework.jsonview.core.element.Element;
 import com.github.developframework.jsonview.core.element.PropertyElement;
 
 import java.math.BigDecimal;
@@ -17,12 +15,6 @@ public class NormalPropertyProcessor extends PropertyProcessor{
 
     public NormalPropertyProcessor(ProcessContext context, PropertyElement element, Expression parentExpression) {
         super(context, element, parentExpression);
-    }
-
-    @Override
-    protected boolean prepare(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
-        // 这里总是为true
-        return true;
     }
 
     @Override

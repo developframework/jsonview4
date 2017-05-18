@@ -2,6 +2,7 @@ package com.github.developframework.jsonview.core.xml;
 
 import com.github.developframework.jsonview.core.JsonviewConfiguration;
 import com.github.developframework.jsonview.core.data.DataDefinition;
+import com.github.developframework.jsonview.core.element.ObjectElement;
 import com.github.developframework.jsonview.core.element.RelevanceElement;
 import org.xml.sax.Attributes;
 
@@ -9,7 +10,7 @@ import org.xml.sax.Attributes;
  * 关联节点解析器
  * @author qiuzhenhao
  */
-class RelevanceElementParser extends AbstractElementSaxParser {
+class RelevanceElementParser extends ContainerElementSaxParser<RelevanceElement> {
 
 
     public RelevanceElementParser(JsonviewConfiguration jsonviewConfiguration) {
@@ -22,20 +23,14 @@ class RelevanceElementParser extends AbstractElementSaxParser {
     }
 
     @Override
-    public void handleAtStartElement(ParseContext parseContext, Attributes attributes) {
-        final String data = attributes.getValue("data").trim();
-        final String alias = attributes.getValue("alias");
-        final String relFunctionValue = attributes.getValue("rel-function");
-        final String mapFunctionValue = attributes.getValue("map-function");
-        final RelevanceElement relevanceElement = new RelevanceElement(jsonviewConfiguration, parseContext.getCurrentTemplate().getNamespace(), parseContext.getCurrentTemplate().getTemplateId(), new DataDefinition(data), alias, relFunctionValue);
-        relevanceElement.setMapFunctionValue(mapFunctionValue);
-        relevanceElement.setRelFunctionValue(relFunctionValue);
-        addChildElement(parseContext, relevanceElement);
-        parseContext.getStack().push(relevanceElement);
+    protected RelevanceElement createElementInstance(ParseContext parseContext, DataDefinition dataDefinition, String alias) {
+        return new RelevanceElement(jsonviewConfiguration, parseContext.getCurrentTemplate().getNamespace(), parseContext.getCurrentTemplate().getTemplateId(), dataDefinition, alias);
     }
 
     @Override
-    public void handleAtEndElement(ParseContext parseContext) {
-        parseContext.getStack().pop();
+    protected void addOtherAttributes(RelevanceElement element, Attributes attributes) {
+        super.addOtherAttributes(element, attributes);
+        element.setRelFunctionValue(attributes.getValue("rel-function"));
+        element.setMapFunctionValue(attributes.getValue("map-function"));
     }
 }

@@ -41,11 +41,6 @@ public class DatePropertyProcessor extends PropertyProcessor{
         this(processContext, element, parentExpression, null);
     }
 
-    @Override
-    protected boolean prepare(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor) {
-        return true;
-    }
-
     public DatePropertyProcessor(ProcessContext processContext, PropertyElement element, Expression parentExpression, String pattern) {
         super(processContext, element, parentExpression);
         dateFormat = new SimpleDateFormat(StringUtils.isBlank(pattern) ? "yyyy-MM-dd HH:mm:ss" : pattern);
