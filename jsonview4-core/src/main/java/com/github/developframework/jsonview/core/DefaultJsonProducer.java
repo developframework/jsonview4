@@ -81,33 +81,37 @@ class DefaultJsonProducer implements JsonProducer{
                 Object rootObject = rootObjectOptional.get();
                 if (rootObject.getClass().isArray() || rootObject instanceof List) {
                     // 视为数组模板
-                    return constructRootArrayNodeTree(processContext, jsonviewTemplate);
+                    return constructRootArrayNodeTree(processContext, jsonviewTemplate, rootObject);
                 } else {
                     // 视为对象模板
-                    return constructRootObjectNodeTree(processContext, jsonviewTemplate);
+                    return constructRootObjectNodeTree(processContext, jsonviewTemplate, rootObject);
                 }
             } else {
-                throw new JsonviewException("Root data can not null.");
+                throw new JsonviewException("Root data must not null.");
             }
         } else {
             // 视为对象模板
-            return constructRootObjectNodeTree(processContext, jsonviewTemplate);
+            return constructRootObjectNodeTree(processContext, jsonviewTemplate, null);
         }
     }
 
-    private ObjectNode constructRootObjectNodeTree(ProcessContext processContext, JsonviewTemplate jsonviewTemplate) {
-        ObjectNode root = jsonviewConfiguration.getObjectMapper().createObjectNode();
-        TemplateProcessor templateProcessor = new TemplateProcessor(processContext, jsonviewTemplate, root, jsonviewTemplate.getDataDefinition().getExpression());
+    private ObjectNode constructRootObjectNodeTree(ProcessContext processContext, JsonviewTemplate jsonviewTemplate, Object value) {
+        ObjectNode rootNode = jsonviewConfiguration.getObjectMapper().createObjectNode();
+        TemplateProcessor templateProcessor = new TemplateProcessor(processContext, jsonviewTemplate, jsonviewTemplate.getDataDefinition().getExpression());
+        templateProcessor.setValue(value);
+        templateProcessor.setNode(rootNode);
         templateProcessor.process(null);
-        return root;
+        return rootNode;
     }
 
-    private ArrayNode constructRootArrayNodeTree(ProcessContext processContext, JsonviewTemplate jsonviewTemplate) {
-        ArrayNode root = jsonviewConfiguration.getObjectMapper().createArrayNode();
+    private ArrayNode constructRootArrayNodeTree(ProcessContext processContext, JsonviewTemplate jsonviewTemplate, Object value) {
+        ArrayNode rootNode = jsonviewConfiguration.getObjectMapper().createArrayNode();
         ArrayElement arrayElement = new ArrayElement(jsonviewConfiguration, jsonviewTemplate.getNamespace(), jsonviewTemplate.getTemplateId(), jsonviewTemplate.getDataDefinition(), null);
         arrayElement.setMapFunctionValue(jsonviewTemplate.getMapFunctionValue());
-        ArrayProcessor arrayProcessor = new ArrayTemplateProcessor(processContext, jsonviewTemplate, root, arrayElement);
+        ArrayProcessor arrayProcessor = new ArrayTemplateProcessor(processContext, jsonviewTemplate, arrayElement);
+        arrayProcessor.setValue(value);
+        arrayProcessor.setNode(rootNode);
         arrayProcessor.process(null);
-        return root;
+        return rootNode;
     }
 }

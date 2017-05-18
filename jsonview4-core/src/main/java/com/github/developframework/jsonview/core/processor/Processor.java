@@ -30,7 +30,7 @@ public abstract class Processor<ELEMENT extends Element, NODE extends JsonNode> 
     protected NODE node;
 
     protected Expression expression;
-
+    @Setter
     protected Object value;
 
     public Processor(ProcessContext processContext, ELEMENT element, NODE node, Expression expression) {

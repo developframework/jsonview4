@@ -34,7 +34,9 @@ public class JsonviewTemplate extends ObjectElement{
 
     @Override
     public Processor<? extends Element, ? extends JsonNode> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression) {
-        return new TemplateProcessor(processContext, this, parentNode, Processor.childExpression(this, parentExpression));
+        TemplateProcessor templateProcessor = new TemplateProcessor(processContext, this, Processor.childExpression(this, parentExpression));
+        templateProcessor.setNode(parentNode);
+        return templateProcessor;
     }
 
     public Optional<Extend> getExtend() {
