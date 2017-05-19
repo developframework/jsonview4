@@ -219,6 +219,7 @@ Jsonview configuration文档不是唯一的，Jsonview框架允许你拥有多�
 - `<object>`
 - `<array>`
 - `<property>`
+- `<prototype>`
 
 功能型标签
 
@@ -295,6 +296,21 @@ Jsonview configuration文档不是唯一的，Jsonview框架允许你拥有多�
 
 ```xml
 <property data="" alias="" converter="" null-hidden="true"/>
+```
+
+| 属性          | 功能                                       | 是否必须 |
+| ----------- | ---------------------------------------- | ---- |
+| data        | 取值表达式                                    | 是    |
+| alias       | 别名，你可以重新定义显示名                            | 否    |
+| converter   | 类型转换器全限定类名或expression表达式。详见[5.1.1节](#chapter511) | 否    |
+| null-hidden | true时表示表达式取的值为null时隐藏该节点，默认为false        | 否    |
+
+###### e) prototype
+
+使用Jackson原型实体构建结构， 你将会使用到`<prototype>`标签。
+
+```xml
+<prototype data="" alias="" converter="" null-hidden="true"/>
 ```
 
 | 属性          | 功能                                       | 是否必须 |
@@ -698,6 +714,46 @@ String json = jsonProducer.createJson(dataModel, "jsonview-student", "student-li
   "birthday" : "1996-05-20"
 } ]
 ```
+
+### <a name="chapter47">**4.7. 使用Jackson原型实体**</a>
+
+使用`<prototype>` 标签可以使用原生的Jackson方式转化实体成json。
+
+```xml
+<template id="student-detail">
+  <prototype data="student" />
+</template>
+```
+
+```java
+@Data
+public class Student {
+    // 编号
+    private int id;
+    // 学生名称
+    @JsonProperty("student_name")	// 通过注解@JsonProperty对属性重命名
+    private String name;
+    // 班级ID
+    @JsonIgnore		// 通过注解@JsonIgnore忽略该属性
+    private int classId;
+    // 出生日期
+    @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd")//通过@JsonFormat格式化日期
+    private Date birthday;
+    //构造方法略
+}
+```
+
+```json
+{
+  "student" : {
+    "id" : 1,
+    "birthday" : "1995-01-01",
+    "student_name" : "Peter"
+  }
+}
+```
+
+更多注解使用请参考jackson-annotations文档。
 
 ## <a name="chapter5">**5. 高级功能**</a>
 

@@ -43,6 +43,7 @@ class ConfigurationSaxParseHandler extends DefaultHandler{
         registerElementSaxParser(new BooleanPropertyElementSaxParser(configuration));
         registerElementSaxParser(new ExtendPortElementSaxParser(configuration));
         registerElementSaxParser(new IgnorePropertyElementSaxParser(configuration));
+        registerElementSaxParser(new PrototypeElementSaxParser(configuration));
         registerElementSaxParser(new IfElementSaxParser(configuration));
         registerElementSaxParser(new ElseElementSaxParser(configuration));
         registerElementSaxParser(new RelevanceElementParser(configuration));
