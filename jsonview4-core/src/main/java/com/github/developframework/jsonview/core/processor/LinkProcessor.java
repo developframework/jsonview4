@@ -7,7 +7,6 @@ import com.github.developframework.expression.ObjectExpression;
 import com.github.developframework.jsonview.core.element.ContentElement;
 import com.github.developframework.jsonview.core.element.Element;
 import com.github.developframework.jsonview.core.element.LinkElement;
-import com.github.developframework.jsonview.core.element.ObjectElement;
 import com.github.developframework.jsonview.core.exception.InvalidArgumentsException;
 import com.github.developframework.jsonview.core.exception.LinkSizeNotEqualException;
 

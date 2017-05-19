@@ -1,7 +1,6 @@
 package com.github.developframework.jsonview.core.xml;
 
 import com.github.developframework.jsonview.core.JsonviewConfiguration;
-import com.github.developframework.jsonview.core.element.ContainerElement;
 import com.github.developframework.jsonview.core.element.IncludeElement;
 import org.apache.commons.lang3.StringUtils;
 import org.xml.sax.Attributes;

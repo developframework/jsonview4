@@ -9,8 +9,6 @@ import com.github.developframework.jsonview.core.processor.ProcessContext;
 import com.github.developframework.jsonview.core.processor.Processor;
 import lombok.Getter;
 
-import java.util.Optional;
-
 /**
  * 扩展端口节点
  * @author qiuzhenhao

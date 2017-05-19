@@ -1,9 +1,7 @@
 package com.github.developframework.jsonview.core.processor;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.developframework.expression.Expression;
-import com.github.developframework.jsonview.core.element.Element;
 import com.github.developframework.jsonview.core.element.PropertyElement;
 import org.apache.commons.lang3.StringUtils;
 

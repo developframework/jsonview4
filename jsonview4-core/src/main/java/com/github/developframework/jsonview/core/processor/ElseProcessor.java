@@ -7,7 +7,6 @@ import com.github.developframework.jsonview.core.element.Element;
 import com.github.developframework.jsonview.core.element.ElseElement;
 
 import java.util.Iterator;
-import java.util.Optional;
 
 /**
  * Else节点处理器

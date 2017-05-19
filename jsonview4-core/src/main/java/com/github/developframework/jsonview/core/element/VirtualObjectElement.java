@@ -9,8 +9,6 @@ import com.github.developframework.jsonview.core.processor.ProcessContext;
 import com.github.developframework.jsonview.core.processor.Processor;
 import com.github.developframework.jsonview.core.processor.VirtualObjectProcessor;
 
-import java.util.Optional;
-
 /**
  * 虚拟对象节点
  * @author qiuzhenhao

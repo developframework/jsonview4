@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.developframework.expression.Expression;
 import com.github.developframework.jsonview.core.dynamic.PropertyConverter;
-import com.github.developframework.jsonview.core.data.DataModel;
 import com.github.developframework.jsonview.core.element.Element;
 import com.github.developframework.jsonview.core.element.PropertyElement;
 import com.github.developframework.jsonview.core.exception.InvalidArgumentsException;

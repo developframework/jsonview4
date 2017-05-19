@@ -3,7 +3,6 @@ package com.github.developframework.jsonview.core.xml;
 import com.github.developframework.jsonview.core.JsonviewConfiguration;
 import com.github.developframework.jsonview.core.data.DataDefinition;
 import com.github.developframework.jsonview.core.element.ObjectElement;
-import org.xml.sax.Attributes;
 
 /**
  * 对象节点解析器

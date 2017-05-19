@@ -10,8 +10,6 @@ import com.github.developframework.jsonview.core.processor.ProcessContext;
 import com.github.developframework.jsonview.core.processor.Processor;
 import com.github.developframework.jsonview.core.processor.PropertyProcessor;
 
-import java.util.Optional;
-
 /**
  * 布尔型属性节点
  * @author qiuzhenhao

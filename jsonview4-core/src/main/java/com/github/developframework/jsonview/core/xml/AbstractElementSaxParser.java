@@ -1,7 +1,8 @@
 package com.github.developframework.jsonview.core.xml;
 
 import com.github.developframework.jsonview.core.JsonviewConfiguration;
-import com.github.developframework.jsonview.core.element.*;
+import com.github.developframework.jsonview.core.element.ContainChildElementable;
+import com.github.developframework.jsonview.core.element.Element;
 
 /**
  * 抽象的xml解析器

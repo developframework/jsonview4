@@ -4,7 +4,6 @@ import com.github.developframework.jsonview.core.JsonviewConfiguration;
 import com.github.developframework.jsonview.core.data.DataDefinition;
 import com.github.developframework.jsonview.core.exception.JsonviewParseXmlException;
 import lombok.Getter;
-import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;

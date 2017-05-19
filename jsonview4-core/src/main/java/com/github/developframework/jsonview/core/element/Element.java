@@ -8,8 +8,6 @@ import com.github.developframework.jsonview.core.processor.ProcessContext;
 import com.github.developframework.jsonview.core.processor.Processor;
 import lombok.Getter;
 
-import java.util.Optional;
-
 /**
  * 节点顶级基类
  * @author qiuzhenhao

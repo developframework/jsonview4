@@ -1,9 +1,7 @@
 package com.github.developframework.jsonview.spring.mvc;
 
 import com.github.developframework.jsonview.core.JsonviewFactory;
-import com.github.developframework.jsonview.core.data.DataModel;
 import com.github.developframework.jsonview.core.exception.JsonviewException;
-import com.github.developframework.jsonview.spring.mvc.AbstractJsonviewReturnValueHandler;
 import com.github.developframework.jsonview.spring.mvc.annotation.JsonviewNamespace;
 import com.github.developframework.jsonview.spring.mvc.annotation.TemplateId;
 import org.springframework.core.MethodParameter;

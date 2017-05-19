@@ -1,14 +1,9 @@
 package com.github.developframework.jsonview.core.processor;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.github.developframework.expression.Expression;
 import com.github.developframework.jsonview.core.element.ArrayElement;
 import com.github.developframework.jsonview.core.element.Element;
 import com.github.developframework.jsonview.core.element.JsonviewTemplate;
-
-import java.util.Optional;
 
 /**
  * 数组模板处理器

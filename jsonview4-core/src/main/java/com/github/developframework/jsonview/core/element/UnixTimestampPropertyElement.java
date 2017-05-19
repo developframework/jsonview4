@@ -10,8 +10,6 @@ import com.github.developframework.jsonview.core.processor.Processor;
 import com.github.developframework.jsonview.core.processor.PropertyProcessor;
 import com.github.developframework.jsonview.core.processor.UnixTimestampPropertyProcessor;
 
-import java.util.Optional;
-
 /**
  * unix时间戳型属性节点
  * @author qiuzhenhao

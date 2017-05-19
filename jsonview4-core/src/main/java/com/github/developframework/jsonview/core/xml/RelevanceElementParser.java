@@ -2,7 +2,6 @@ package com.github.developframework.jsonview.core.xml;
 
 import com.github.developframework.jsonview.core.JsonviewConfiguration;
 import com.github.developframework.jsonview.core.data.DataDefinition;
-import com.github.developframework.jsonview.core.element.ObjectElement;
 import com.github.developframework.jsonview.core.element.RelevanceElement;
 import org.xml.sax.Attributes;
 

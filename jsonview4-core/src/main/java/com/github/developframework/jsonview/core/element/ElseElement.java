@@ -8,8 +8,6 @@ import com.github.developframework.jsonview.core.processor.ElseProcessor;
 import com.github.developframework.jsonview.core.processor.ProcessContext;
 import com.github.developframework.jsonview.core.processor.Processor;
 
-import java.util.Optional;
-
 /**
  * else节点
  * @author qiuzhenhao

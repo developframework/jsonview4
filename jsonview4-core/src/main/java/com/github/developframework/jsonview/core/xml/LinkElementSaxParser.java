@@ -3,10 +3,6 @@ package com.github.developframework.jsonview.core.xml;
 import com.github.developframework.jsonview.core.JsonviewConfiguration;
 import com.github.developframework.jsonview.core.data.DataDefinition;
 import com.github.developframework.jsonview.core.element.LinkElement;
-import com.github.developframework.jsonview.core.element.ObjectElement;
-import com.github.developframework.jsonview.core.exception.JsonviewParseXmlException;
-import org.apache.commons.lang3.StringUtils;
-import org.xml.sax.Attributes;
 
 /**
  * 一对一链接节点解析器
