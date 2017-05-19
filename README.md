@@ -307,7 +307,7 @@ Jsonview configuration文档不是唯一的，Jsonview框架允许你拥有多�
 
 ###### e) prototype
 
-使用Jackson原型实体构建结构， 你将会使用到`<prototype>`标签。
+使用Jackson原型实体构建结构， 你将会使用到`<prototype>`标签。详见[4.7.节](#chapter47)
 
 ```xml
 <prototype data="" alias="" converter="" null-hidden="true"/>
@@ -1107,7 +1107,7 @@ dataModel.putData("rel-function", (RelFunction<SchoolClass, Student>) (sourceIte
 
 可以使用`<if>` `<else>` 标签进行模块内容的取舍。`<else>` 标签可以不写，但必须紧跟`<if>` 后出现。
 
-`<if>` 标签的`condition` 属性内容为接口`com.github.developframework.jsonview.core.dynamic.Condition` 的实现类。
+`<if>` 标签的`condition` 属性内容为接口`com.github.developframework.jsonview.core.dynamic.Condition` 的实现类或直接使用Boolean类型。
 
 ```java
 @FunctionalInterface
@@ -1140,6 +1140,8 @@ public interface Condition {
 dataModel.putData("sayHello", "Hello");
 dataModel.putData("sayBye", "Bye");
 dataModel.putData("myCondition", (Condition) (dm, expression) -> true);
+// 或直接使用boolean
+// dataModel.putData("myCondition", true);
 ```
 
 ```json

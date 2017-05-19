@@ -35,17 +35,21 @@ public class IfProcessor extends FunctionalProcessor<IfElement, ObjectNode> {
                 throw new JsonviewException("Can't new condition instance.");
             }
         });
-        if (condition instanceof Condition) {
+        boolean verifyResult;
+        if (condition instanceof Boolean) {
+            verifyResult = ((Boolean) condition).booleanValue();
+        } else if (condition instanceof Condition) {
             // 验证条件
-            if (((Condition) condition).verify(processContext.getDataModel(), parentProcessor.getExpression())) {
-                // 执行if
-                executeIfTrue(parentProcessor);
-            } else {
-                // 执行else
-                executeIfFalse(parentProcessor);
-            }
+            verifyResult = ((Condition) condition).verify(processContext.getDataModel(), parentProcessor.getExpression());
         } else {
             throw new JsonviewException("The expression \"%s\" is not Condition instance.", element.getConditionValue());
+        }
+        if (verifyResult) {
+            // 执行if
+            executeIfTrue(parentProcessor);
+        } else {
+            // 执行else
+            executeIfFalse(parentProcessor);
         }
     }
 
