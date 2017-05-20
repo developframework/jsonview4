@@ -9,11 +9,10 @@ import org.xml.sax.Attributes;
 /**
  * 属性节点解析器
  * @author qiuzhenhao
- * @date 2017/5/8
  */
-public class PropertyElementSaxParser extends ContentElementSaxParser<PropertyElement>{
+class PropertyElementSaxParser extends ContentElementSaxParser<PropertyElement>{
 
-    public PropertyElementSaxParser(JsonviewConfiguration jsonviewConfiguration) {
+    PropertyElementSaxParser(JsonviewConfiguration jsonviewConfiguration) {
         super(jsonviewConfiguration);
     }
 

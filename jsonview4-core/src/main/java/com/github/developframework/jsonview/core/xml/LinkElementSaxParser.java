@@ -9,9 +9,9 @@ import com.github.developframework.jsonview.core.element.LinkElement;
  *
  * @author qiuzhenhao
  */
-public class LinkElementSaxParser extends ContainerElementSaxParser<LinkElement>  {
+class LinkElementSaxParser extends ContainerElementSaxParser<LinkElement>  {
 
-    public LinkElementSaxParser(JsonviewConfiguration jsonviewConfiguration) {
+    LinkElementSaxParser(JsonviewConfiguration jsonviewConfiguration) {
         super(jsonviewConfiguration);
     }
 

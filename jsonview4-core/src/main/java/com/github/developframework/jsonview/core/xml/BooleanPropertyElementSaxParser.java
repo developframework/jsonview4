@@ -8,10 +8,8 @@ import com.github.developframework.jsonview.core.element.PropertyElement;
 /**
  * 布尔型属性节点解析器
  * @author qiuzhenhao
- * @date 2017/5/8
  */
 class BooleanPropertyElementSaxParser extends PropertyElementSaxParser {
-
 
     BooleanPropertyElementSaxParser(JsonviewConfiguration jsonviewConfiguration) {
         super(jsonviewConfiguration);

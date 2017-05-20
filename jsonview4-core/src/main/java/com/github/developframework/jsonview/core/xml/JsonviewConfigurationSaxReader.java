@@ -14,7 +14,6 @@ import java.util.Set;
 /**
  * 配置解析器
  * @author qiuzhenhao
- * @date 2017/5/7
  */
 @Slf4j
 public class JsonviewConfigurationSaxReader {

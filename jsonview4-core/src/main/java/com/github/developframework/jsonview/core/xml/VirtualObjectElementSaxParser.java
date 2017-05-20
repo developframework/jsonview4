@@ -8,12 +8,11 @@ import org.xml.sax.Attributes;
 /**
  * 虚拟对象节点解析器
  * @author qiuzhenhao
- * @date 2017/5/9
  */
-public class VirtualObjectElementSaxParser extends ContainerElementSaxParser<VirtualObjectElement>{
+class VirtualObjectElementSaxParser extends ContainerElementSaxParser<VirtualObjectElement>{
 
 
-    public VirtualObjectElementSaxParser(JsonviewConfiguration jsonviewConfiguration) {
+    VirtualObjectElementSaxParser(JsonviewConfiguration jsonviewConfiguration) {
         super(jsonviewConfiguration);
     }
 

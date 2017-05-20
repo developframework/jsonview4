@@ -15,7 +15,7 @@ import com.github.developframework.jsonview.core.exception.JsonviewException;
 import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
-import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -57,8 +57,8 @@ public class ArrayProcessor extends ContainerProcessor<ArrayElement, ArrayNode> 
         int size;
         if (value.getClass().isArray()) {
             size = ((Object[]) value).length;
-        } else if (value instanceof Collection<?>) {
-            size = ((Collection<?>) value).size();
+        } else if (value instanceof List<?>) {
+            size = ((List<?>) value).size();
         } else {
             throw new InvalidArgumentsException("data", expression.toString(), "Data must be array or List type.");
         }
@@ -67,7 +67,12 @@ public class ArrayProcessor extends ContainerProcessor<ArrayElement, ArrayNode> 
         }
     }
 
-    protected void single(ArrayExpression arrayExpression, int size) {
+    /**
+     * 处理单一元素
+     * @param arrayExpression 表达式
+     * @param size 总数量
+     */
+    protected final void single(ArrayExpression arrayExpression, int size) {
         if (element.isChildElementEmpty() || mapFunctionOptional.isPresent()) {
             empty(arrayExpression.getIndex());
         } else {
@@ -77,17 +82,19 @@ public class ArrayProcessor extends ContainerProcessor<ArrayElement, ArrayNode> 
         }
     }
 
-    private void empty(int index) {
+    /**
+     * 空子标签处理
+     * @param index 索引
+     */
+    private void empty(final int index) {
         final Optional<Object> objectOptional = processContext.getDataModel().getData(ArrayExpression.fromObject((ObjectExpression) expression, index));
         if (!objectOptional.isPresent()) {
             node.addNull();
             return;
         }
-        Object object = objectOptional.get();
+        final Object object = objectOptional.get();
 
-        if (mapFunctionOptional.isPresent()) {
-            object = mapFunctionOptional.get().apply(object, index);
-        }
+        mapFunctionOptional.ifPresent(mapFunction -> mapFunction.apply(object, index));
 
         if (object instanceof String) {
             node.add((String) object);
@@ -114,7 +121,13 @@ public class ArrayProcessor extends ContainerProcessor<ArrayElement, ArrayNode> 
         }
     }
 
-    protected Optional<MapFunction> mapFunction(Optional<String> mapFunctionValueOptional, DataModel dataModel) {
+    /**
+     * 获得mapFunction
+     * @param mapFunctionValueOptional mapFunctionValueOptional
+     * @param dataModel 数据模型
+     * @return mapFunction
+     */
+    private Optional<MapFunction> mapFunction(Optional<String> mapFunctionValueOptional, DataModel dataModel) {
         if (mapFunctionValueOptional.isPresent()) {
             final String mapFunctionValue = mapFunctionValueOptional.get();
             Optional<Object> mapFunctionOptional = dataModel.getData(mapFunctionValue);

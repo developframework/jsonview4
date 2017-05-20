@@ -11,7 +11,6 @@ import java.util.List;
 /**
  * 配置解析Handler
  * @author qiuzhenhao
- * @date 2017/5/7
  */
 class ConfigurationSaxParseHandler extends DefaultHandler{
 

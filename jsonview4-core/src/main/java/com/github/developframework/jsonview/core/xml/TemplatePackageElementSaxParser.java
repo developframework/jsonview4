@@ -7,7 +7,6 @@ import org.xml.sax.Attributes;
 /**
  * 模板包解析器
  * @author qiuzhenhao
- * @date 2017/5/8
  */
 class TemplatePackageElementSaxParser extends AbstractElementSaxParser{
 

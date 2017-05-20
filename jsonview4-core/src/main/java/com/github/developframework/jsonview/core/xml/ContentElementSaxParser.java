@@ -12,7 +12,7 @@ import org.xml.sax.Attributes;
  */
 abstract class ContentElementSaxParser<T extends Element> extends AbstractElementSaxParser{
 
-    public ContentElementSaxParser(JsonviewConfiguration jsonviewConfiguration) {
+    ContentElementSaxParser(JsonviewConfiguration jsonviewConfiguration) {
         super(jsonviewConfiguration);
     }
 

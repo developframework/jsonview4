@@ -7,12 +7,11 @@ import org.xml.sax.Attributes;
 /**
  * 容器节点解析器
  * @author qiuzhenhao
- * @date 2017/5/7
  * @param <T> 容器节点类型
  */
 abstract class ContainerElementSaxParser<T extends ContainerElement> extends ContentElementSaxParser<T> {
 
-    public ContainerElementSaxParser(JsonviewConfiguration jsonviewConfiguration) {
+    ContainerElementSaxParser(JsonviewConfiguration jsonviewConfiguration) {
         super(jsonviewConfiguration);
     }
 

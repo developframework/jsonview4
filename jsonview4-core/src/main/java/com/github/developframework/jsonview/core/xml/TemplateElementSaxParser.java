@@ -9,7 +9,6 @@ import org.xml.sax.Attributes;
 /**
  * 模板节点解析器
  * @author qiuzhenhao
- * @date 2017/5/8
  */
 class TemplateElementSaxParser extends ContainerElementSaxParser<JsonviewTemplate>{
 

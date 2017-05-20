@@ -6,7 +6,6 @@ import java.io.InputStream;
 /**
  * 配置源接口
  * @author qiuzhenhao
- * @date 2017/5/7
  */
 public interface ConfigurationSource {
 

@@ -7,11 +7,10 @@ import org.xml.sax.Attributes;
 /**
  * 扩展端口节点解析器
  * @author qiuzhenhao
- * @date 2017/5/8
  */
-public class ExtendPortElementSaxParser extends AbstractElementSaxParser {
+class ExtendPortElementSaxParser extends AbstractElementSaxParser {
 
-    public ExtendPortElementSaxParser(JsonviewConfiguration jsonviewConfiguration) {
+    ExtendPortElementSaxParser(JsonviewConfiguration jsonviewConfiguration) {
         super(jsonviewConfiguration);
     }
 

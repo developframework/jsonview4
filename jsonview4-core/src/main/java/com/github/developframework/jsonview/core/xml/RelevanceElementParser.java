@@ -12,7 +12,7 @@ import org.xml.sax.Attributes;
 class RelevanceElementParser extends ContainerElementSaxParser<RelevanceElement> {
 
 
-    public RelevanceElementParser(JsonviewConfiguration jsonviewConfiguration) {
+    RelevanceElementParser(JsonviewConfiguration jsonviewConfiguration) {
         super(jsonviewConfiguration);
     }
 

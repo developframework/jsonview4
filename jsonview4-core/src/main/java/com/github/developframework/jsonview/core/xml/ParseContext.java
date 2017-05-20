@@ -13,7 +13,6 @@ import java.util.Stack;
 /**
  * 解析过程上下文
  * @author qiuzhenhao
- * @date 2017/5/7
  */
 @Getter
 class ParseContext {

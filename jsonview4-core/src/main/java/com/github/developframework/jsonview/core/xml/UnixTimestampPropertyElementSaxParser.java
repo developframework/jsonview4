@@ -8,7 +8,6 @@ import com.github.developframework.jsonview.core.element.UnixTimestampPropertyEl
 /**
  * unix时间戳型属性节点解析器
  * @author qiuzhenhao
- * @date 2017/5/8
  */
 class UnixTimestampPropertyElementSaxParser extends PropertyElementSaxParser {
 

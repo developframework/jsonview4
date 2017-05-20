@@ -9,7 +9,6 @@ import org.xml.sax.Attributes;
 /**
  * 日期时间类型属性节点解析器
  * @author qiuzhenhao
- * @date 2017/5/8
  */
 class DatePropertyElementSaxParser extends PropertyElementSaxParser {
 
