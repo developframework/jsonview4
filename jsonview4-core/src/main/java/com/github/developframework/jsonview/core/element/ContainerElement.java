@@ -71,13 +71,24 @@ public abstract class ContainerElement extends ContentElement implements Contain
         }
     }
 
+    public void copyChildElement(ContainerElement otherContainerElement) {
+        this.childElements.addAll(otherContainerElement.getChildElements());
+        this.ignorePropertyNames.addAll(otherContainerElement.ignorePropertyNames);
+        this.alias = otherContainerElement.alias;
+        this.forClass = otherContainerElement.forClass;
+        this.nullHidden = otherContainerElement.nullHidden;
+        this.namespace = otherContainerElement.namespace;
+        this.templateId = otherContainerElement.templateId;
+    }
+
     @Override
     public void addChildElement(Element element) {
         childElements.add(element);
     }
 
+
     @Override
-    public void copyChildElement(ContainChildElementable otherContainer) {
+    public final void copyChildElement(ContainChildElementable otherContainer) {
         this.childElements.addAll(otherContainer.getChildElements());
     }
 

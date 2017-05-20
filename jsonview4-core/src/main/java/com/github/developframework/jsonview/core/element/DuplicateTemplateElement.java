@@ -13,11 +13,10 @@ import com.github.developframework.jsonview.core.processor.Processor;
  *
  * @author qiuzhenhao
  */
-public class DuplicateTemplateElement extends ObjectElement {
+public final class DuplicateTemplateElement extends ProxyObjectElement {
 
     public DuplicateTemplateElement(JsonviewConfiguration configuration, JsonviewTemplate jsonviewTemplate) {
-        super(configuration, jsonviewTemplate.getNamespace(), jsonviewTemplate.getTemplateId(), null, null);
-        super.copyChildElement(jsonviewTemplate);
+        super(configuration, jsonviewTemplate, null);
     }
 
     @Override

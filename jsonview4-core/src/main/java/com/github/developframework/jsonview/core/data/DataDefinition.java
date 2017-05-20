@@ -19,6 +19,11 @@ public class DataDefinition {
     /* 表达式 */
     private Expression expression;
 
+    public DataDefinition(FunctionSign functionSign, Expression expression) {
+        this.functionSign = functionSign;
+        this.expression = expression;
+    }
+
     public DataDefinition(String dataValue) {
         if (StringUtils.isBlank(dataValue)) {
             expression = Expression.EMPTY_EXPRESSION;

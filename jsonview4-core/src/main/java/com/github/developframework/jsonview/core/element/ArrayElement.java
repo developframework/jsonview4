@@ -43,9 +43,9 @@ public class ArrayElement extends ContainerElement{
     }
 
     @Override
-    public void copyChildElement(ContainChildElementable otherContainer) {
-        super.copyChildElement(otherContainer);
-        this.itemObjectElement.copyChildElement(otherContainer);
+    public void copyChildElement(ContainerElement otherContainerElement) {
+        super.copyChildElement(otherContainerElement);
+        this.itemObjectElement.copyChildElement(otherContainerElement);
     }
 
     public Optional<String> getMapFunctionValueOptional() {

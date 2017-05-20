@@ -40,14 +40,7 @@ public class LinkElement extends ObjectElement{
             };
         } else {
             // 如果有子节点，视为对象节点处理
-            ObjectElement objectElement = new ObjectElement(configuration, namespace, templateId, dataDefinition, alias) {
-                @Override
-                public Processor<? extends Element, ? extends JsonNode> createProcessor(ProcessContext processContext, ObjectNode parentNode, Expression parentExpression) {
-                    return new ObjectProcessor(processContext, this, parentExpression);
-                }
-            };
-            objectElement.copyChildElement(this);
-            return objectElement;
+            return new ProxyObjectElement(configuration, this, dataDefinition);
         }
     }
 

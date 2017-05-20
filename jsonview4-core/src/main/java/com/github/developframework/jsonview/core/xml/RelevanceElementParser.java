@@ -31,5 +31,6 @@ class RelevanceElementParser extends ContainerElementSaxParser<RelevanceElement>
         super.addOtherAttributes(element, attributes);
         element.setRelFunctionValue(attributes.getValue("rel-function"));
         element.setMapFunctionValue(attributes.getValue("map-function"));
+        element.setRelevanceType(attributes.getValue("type"));
     }
 }
