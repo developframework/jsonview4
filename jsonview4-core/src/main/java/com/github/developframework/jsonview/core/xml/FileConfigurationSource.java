@@ -8,7 +8,6 @@ import java.io.InputStream;
 /**
  * 文件配置源
  * @author qiuzhenhao
- * @date 2017/5/7
  */
 public class FileConfigurationSource implements ConfigurationSource{
 

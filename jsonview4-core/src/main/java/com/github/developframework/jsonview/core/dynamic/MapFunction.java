@@ -8,9 +8,9 @@ public interface MapFunction<T, R> {
 
     /**
      * 映射方法
-     * @param t
-     * @param index
-     * @return
+     * @param t 数组元素
+     * @param index 索引
+     * @return 转换后的对象
      */
     R apply(T t, int index);
 }

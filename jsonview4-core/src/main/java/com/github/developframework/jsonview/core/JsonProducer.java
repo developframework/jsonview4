@@ -14,7 +14,7 @@ public interface JsonProducer {
      * @param dataModel 数据模型
      * @param namespace 命名空间
      * @param templateId 模板ID
-     * @return
+     * @return json字符串
      */
     String createJson(DataModel dataModel, String namespace, String templateId);
 
@@ -24,7 +24,7 @@ public interface JsonProducer {
      * @param namespace 命名空间
      * @param templateId 模板ID
      * @param isPretty 是否美化
-     * @return
+     * @return json字符串
      */
     String createJson(DataModel dataModel, String namespace, String templateId, boolean isPretty);
 

@@ -59,7 +59,7 @@ public class HashDataModel implements DataModel{
      * 构造只有一个数据的DataModel
      * @param dataName 数据名称
      * @param data 数据值
-     * @return
+     * @return DataModel
      */
     public static final DataModel singleton(String dataName, Object data) {
         DataModel dataModel = new HashDataModel();

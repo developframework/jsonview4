@@ -66,8 +66,8 @@ public abstract class PropertyProcessor extends ContentProcessor<PropertyElement
     /**
      * 判断是否支持sourceClass类型
      *
-     * @param sourceClass
-     * @return
+     * @param sourceClass 源类型
+     * @return 是否支持
      */
     protected abstract boolean support(Class<?> sourceClass);
 

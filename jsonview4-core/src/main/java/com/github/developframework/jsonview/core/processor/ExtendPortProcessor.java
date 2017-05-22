@@ -24,7 +24,6 @@ public class ExtendPortProcessor extends FunctionalProcessor<ExtendPortElement, 
      * 扩展口回调接口
      *
      * @author qiuzhenhao
-     * @date 2017/5/8
      */
     public interface ExtendCallback {
 

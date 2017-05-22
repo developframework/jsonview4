@@ -36,7 +36,7 @@ public class RelevanceElement extends ArrayElement {
 
     /**
      * 设置关联类型
-     * @param relevanceTypeValue
+     * @param relevanceTypeValue 关联类型值
      */
     public void setRelevanceType(String relevanceTypeValue) {
         if (StringUtils.isNotBlank(relevanceTypeValue)) {

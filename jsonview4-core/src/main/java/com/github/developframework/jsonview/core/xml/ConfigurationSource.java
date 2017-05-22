@@ -12,7 +12,7 @@ public interface ConfigurationSource {
     /**
      * 获得源的输入流
      * @return 输入流
-     * @throws IOException
+     * @throws IOException IO异常
      */
     InputStream getInputStream() throws IOException;
 

@@ -27,7 +27,7 @@ public class LinkElement extends ObjectElement{
 
     /**
      * 创建一个代理节点处理任务
-     * @return
+     * @return 代理节点处理任务
      */
     public ContentElement createProxyContentElement() {
         if(isChildElementEmpty()) {

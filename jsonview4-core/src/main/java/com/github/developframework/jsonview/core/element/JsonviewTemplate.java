@@ -45,7 +45,7 @@ public class JsonviewTemplate extends ObjectElement{
 
     /**
      * 创建一个副本模板节点
-     * @return
+     * @return 副本模板节点
      */
     public DuplicateTemplateElement createDuplicateTemplateElement() {
         return new DuplicateTemplateElement(configuration, this);

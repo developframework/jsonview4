@@ -59,7 +59,7 @@ public abstract class Processor<ELEMENT extends Element, NODE extends JsonNode> 
     /**
      * 准备操作
      * @param parentProcessor 上层处理器
-     * @return
+     * @return 是否继续执行处理逻辑
      */
     protected abstract boolean prepare(ContentProcessor<? extends Element, ? extends JsonNode> parentProcessor);
 

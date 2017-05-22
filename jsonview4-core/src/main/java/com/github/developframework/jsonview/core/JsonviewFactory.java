@@ -73,7 +73,7 @@ public class JsonviewFactory {
 
     /**
      * 设置propertyNamingStrategy
-     * @param propertyNamingStrategy
+     * @param propertyNamingStrategy propertyNamingStrategy
      */
     public void setPropertyNamingStrategy(PropertyNamingStrategy propertyNamingStrategy) {
         jsonviewConfiguration.getObjectMapper().setPropertyNamingStrategy(propertyNamingStrategy);
