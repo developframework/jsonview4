@@ -22,7 +22,7 @@ maven
 <dependency>
 	<groupId>com.github.developframework</groupId>
 	<artifactId>jsonview4-core</artifactId>
-	<version>4.0.0</version>
+	<version>4.0.1</version>
 </dependency>
 ```
 
