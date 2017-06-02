@@ -10,7 +10,6 @@ import com.github.developframework.jsonview.core.element.PrototypeElement;
 import com.github.developframework.jsonview.core.exception.InvalidArgumentsException;
 import com.github.developframework.jsonview.core.exception.JsonviewException;
 
-import java.io.IOException;
 import java.util.Optional;
 
 /**
@@ -60,12 +59,7 @@ public class PrototypeProcessor extends ContentProcessor<PrototypeElement, Objec
         final Object convertValue = convertValueOptional.orElse(value);
 
         ObjectMapper objectMapper = processContext.getJsonviewConfiguration().getObjectMapper();
-        try {
-            String json = objectMapper.writeValueAsString(convertValue);
-            JsonNode jsonNode = objectMapper.readTree(json);
-            node.set(element.showName(), jsonNode);
-        } catch (IOException e) {
-            throw new JsonviewException("Happen IOException on prototype handle.");
-        }
+        JsonNode jsonNode = objectMapper.valueToTree(convertValue);
+        node.set(element.showName(), jsonNode);
     }
 }
