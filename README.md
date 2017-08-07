@@ -22,7 +22,7 @@ maven
 <dependency>
 	<groupId>com.github.developframework</groupId>
 	<artifactId>jsonview4-core</artifactId>
-	<version>4.0.1</version>
+	<version>4.0.2</version>
 </dependency>
 ```
 
@@ -1177,6 +1177,6 @@ Jsonview框架使用slf4j-api日志接口，提供内部日志打印功能。可
 项目启动日志：
 
 ```
-09:29:07.753 INFO  - Jsonview framework loaded the configuration file "/jsonview/jsonview-demo.xml".
+09:29:07.753 INFO  - Jsonview framework loaded the configuration source "/jsonview/jsonview-demo.xml".
 ```
 
