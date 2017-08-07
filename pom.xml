@@ -15,8 +15,8 @@
 
     <properties>
         <expression.version>1.0.0</expression.version>
-        <jackson.version>2.8.7</jackson.version>
-        <spring.version>4.3.7.RELEASE</spring.version>
+        <jackson.version>2.8.9</jackson.version>
+        <spring.version>4.3.10.RELEASE</spring.version>
     </properties>
 
     <name>Jsonview4 Framework</name>
