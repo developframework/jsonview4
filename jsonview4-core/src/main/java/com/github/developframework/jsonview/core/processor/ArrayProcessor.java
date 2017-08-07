@@ -92,9 +92,11 @@ public class ArrayProcessor extends ContainerProcessor<ArrayElement, ArrayNode> 
             node.addNull();
             return;
         }
-        final Object object = objectOptional.get();
+        Object object = objectOptional.get();
 
-        mapFunctionOptional.ifPresent(mapFunction -> mapFunction.apply(object, index));
+        if (mapFunctionOptional.isPresent()) {
+            object = mapFunctionOptional.get().apply(object, index);
+        }
 
         if (object instanceof String) {
             node.add((String) object);
