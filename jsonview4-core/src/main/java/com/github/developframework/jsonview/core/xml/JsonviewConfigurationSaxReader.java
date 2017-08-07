@@ -44,7 +44,7 @@ public class JsonviewConfigurationSaxReader {
         ConfigurationSaxParseHandler handler = new ConfigurationSaxParseHandler(jsonviewConfiguration);
         for (ConfigurationSource source : sources) {
             handleSingleSource(handler, source);
-            log.info("Jsonview framework loaded the configuration file \"{}\".", source.getSourceName());
+            log.info("Jsonview framework loaded the configuration source \"{}\".", source.getSourceName());
         }
         return jsonviewConfiguration;
     }
@@ -63,7 +63,7 @@ public class JsonviewConfigurationSaxReader {
             is.close();
         } catch (Exception e) {
             e.printStackTrace();
-            throw new JsonviewParseXmlException("Jsonview Framework parse source \"%s\" happened error: %s", source.getSourceName(), e.getMessage());
+            throw new JsonviewParseXmlException("Jsonview Framework parse configuration source \"%s\" happened error: %s", source.getSourceName(), e.getMessage());
         }
     }
 }
