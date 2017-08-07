@@ -38,7 +38,7 @@ public class BooleanPropertyProcessor extends PropertyProcessor{
 
     @Override
     protected void handle(ObjectNode parentNode, Class<?> clazz, Object value, String showName) {
-        boolean v = false;
+        boolean v;
         if (clazz == Boolean.class) {
             v = ((Boolean) value).booleanValue();
         } else if (clazz == Integer.class) {
