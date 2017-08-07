@@ -23,7 +23,7 @@ class ConfigurationSaxParseHandler extends DefaultHandler{
 
     public ConfigurationSaxParseHandler(JsonviewConfiguration configuration) {
         this.configuration = configuration;
-        this.elementSaxParserChain = new ArrayList<>(15);
+        this.elementSaxParserChain = new ArrayList<>(17);
         this.parseContext = new ParseContext(configuration);
         registerDefaultElementSaxParser();
     }
